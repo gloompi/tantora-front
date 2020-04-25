@@ -1,0 +1,21 @@
+.users {
+  &__list {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 25px;
+    margin-right: -25px;
+  }
+
+  &__item {
+    border: 1px solid #ccc;
+    padding: 15px 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
