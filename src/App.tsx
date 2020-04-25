@@ -5,10 +5,11 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import 'normalize.css';
 import './App.scss';
 
+import env from 'config/env';
 import Users from 'components/Users';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:9999/graphql',
+  uri: env.backendUrl,
 });
 
 const App: FC = () => (
