@@ -25,7 +25,7 @@ interface IResponse {
 
 const Users: FC = () => {
   const { loading, error, data } = useQuery<IResponse>(USERS);
-  console.log('CHECK', process.env.BACKEND_URL)
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
