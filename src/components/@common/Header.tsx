@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,7 +9,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
-import { Link } from 'react-router-dom';
+
+import useStore from 'hooks/useStore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = () => {
+const Header = observer(() => {
+  const { authStore } = useStore();
   const classes = useStyles();
 
   return (
@@ -35,7 +39,7 @@ const Header = () => {
           <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Link to="/">
+          <Link to="/admins">
             <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
               <HomeIcon />
             </IconButton>
@@ -43,13 +47,21 @@ const Header = () => {
           <Typography variant="h6" className={classes.title}>
             `Online Exhibition`
           </Typography>
-          <Link to="/login" style={{ textDecoration: 'none' }}>
-            <Button className={classes.login}>Login</Button>
-          </Link>
+          {authStore.isAuth
+            ? (
+              <Link to="/logout" style={{ textDecoration: 'none' }}>
+                <Button className={classes.login}>Logout</Button>
+              </Link>
+            ) : (
+              <Link to="/login" style={{ textDecoration: 'none' }}>
+                <Button className={classes.login}>Login</Button>
+              </Link>
+            )
+          }
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+});
 
 export default Header;

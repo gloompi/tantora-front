@@ -1,11 +1,14 @@
 import { createMuiTheme } from '@material-ui/core';
-import teal from '@material-ui/core/colors/teal';
-import blue from '@material-ui/core/colors/blue';
+import indigo from '@material-ui/core/colors/indigo';
+import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const theme = createMuiTheme({
   palette: {
-    primary: teal,
-    secondary: blue,
+    primary: indigo,
+    secondary: blueGrey,
+    common: {
+      white: '#fff',
+    }
   },
 });
 
