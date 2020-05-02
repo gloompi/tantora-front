@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import Button from '@material-ui/core/Button';
 import VpnKey from '@material-ui/icons/VpnKey';
 
@@ -24,7 +25,7 @@ interface IResponse {
   admins: User[]
 }
 
-const Admin: FC = () => {
+const Admin: FC = observer(() => {
   useAuthRoute();
   const client = usePrivateClient()
   const { loading, error, data } = useQuery<IResponse>(ADMIN, { client });
@@ -52,6 +53,6 @@ const Admin: FC = () => {
       </ul>
     </div>
   )
-};
+});
 
 export default Admin;
