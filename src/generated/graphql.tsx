@@ -9,32 +9,32 @@ export type Scalars = {
   Float: number;
 };
 
-export type Exhibition = {
-   __typename?: 'Exhibition';
-  createdDate?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  exhibitionId?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  owner?: Maybe<User>;
-  startDate?: Maybe<Scalars['String']>;
+export type RootQuery = {
+   __typename?: 'RootQuery';
+  admins?: Maybe<Array<Maybe<User>>>;
+  audience?: Maybe<Array<Maybe<User>>>;
+  exhibitions?: Maybe<Array<Maybe<Exhibition>>>;
+  loginUser?: Maybe<LoginResponse>;
+  logout?: Maybe<LogoutResponse>;
+  producers?: Maybe<Array<Maybe<User>>>;
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
-export type Token = {
-   __typename?: 'Token';
-  accessToken?: Maybe<Scalars['String']>;
-  refreshToken?: Maybe<Scalars['String']>;
+
+export type RootQueryLoginUserArgs = {
+  userName: Scalars['String'];
+  password: Scalars['String'];
 };
 
-export type User = {
-   __typename?: 'User';
-  dateOfBirth?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  isActive?: Maybe<Scalars['Boolean']>;
-  lastName?: Maybe<Scalars['String']>;
-  phone?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
+
+export type RootQueryLogoutArgs = {
+  token: Scalars['String'];
+};
+
+export type LoginResponse = {
+   __typename?: 'LoginResponse';
+  token?: Maybe<Token>;
+  user?: Maybe<User>;
 };
 
 export type RootMutation = {
@@ -69,11 +69,11 @@ export type RootMutationCreateUserArgs = {
   userId?: Maybe<Scalars['String']>;
   firstName: Scalars['String'];
   lastName: Scalars['String'];
-  dateOfBirth: Scalars['String'];
   userName: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
+  dateOfBirth: Scalars['String'];
   isActive?: Maybe<Scalars['Boolean']>;
 };
 
@@ -87,47 +87,37 @@ export type RefreshTokenResponse = {
   token?: Maybe<Token>;
 };
 
-export type LoginResponse = {
-   __typename?: 'LoginResponse';
-  token?: Maybe<Token>;
-  user?: Maybe<User>;
-};
-
-export type RootQuery = {
-   __typename?: 'RootQuery';
-  admins?: Maybe<Array<Maybe<User>>>;
-  audience?: Maybe<Array<Maybe<User>>>;
-  exhibitions?: Maybe<Array<Maybe<Exhibition>>>;
-  loginUser?: Maybe<LoginResponse>;
-  logout?: Maybe<LogoutResponse>;
-  producers?: Maybe<Array<Maybe<User>>>;
-  users?: Maybe<Array<Maybe<User>>>;
-};
-
-
-export type RootQueryLoginUserArgs = {
-  userName: Scalars['String'];
-  password: Scalars['String'];
-};
-
-
-export type RootQueryLogoutArgs = {
-  token: Scalars['String'];
-};
-
 export type CreateUserResponse = {
    __typename?: 'CreateUserResponse';
   status?: Maybe<Scalars['String']>;
 };
 
-export type CreateExhibitionResponse = {
-   __typename?: 'CreateExhibitionResponse';
-  status?: Maybe<Scalars['String']>;
+export type Exhibition = {
+   __typename?: 'Exhibition';
+  createdDate?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  exhibitionId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<User>;
+  startDate?: Maybe<Scalars['String']>;
 };
 
-export type LogoutResponse = {
-   __typename?: 'LogoutResponse';
-  deleted?: Maybe<Scalars['Int']>;
+export type User = {
+   __typename?: 'User';
+  dateOfBirth?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  isActive?: Maybe<Scalars['Boolean']>;
+  lastName?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+};
+
+export type Token = {
+   __typename?: 'Token';
+  accessToken?: Maybe<Scalars['String']>;
+  refreshToken?: Maybe<Scalars['String']>;
 };
 
 export type AddToAdminResponse = {
@@ -137,6 +127,16 @@ export type AddToAdminResponse = {
 
 export type AddToProducerResponse = {
    __typename?: 'AddToProducerResponse';
+  status?: Maybe<Scalars['String']>;
+};
+
+export type LogoutResponse = {
+   __typename?: 'LogoutResponse';
+  deleted?: Maybe<Scalars['Int']>;
+};
+
+export type CreateExhibitionResponse = {
+   __typename?: 'CreateExhibitionResponse';
   status?: Maybe<Scalars['String']>;
 };
 
