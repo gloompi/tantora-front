@@ -35,8 +35,6 @@ const client = new ApolloClient({
   uri: env.backendUrl,
 });
 
-console.log('ENV', env);
-
 const App: FC = () => (
   <ApolloProvider client={client}>
     <PrivateClientProvider>

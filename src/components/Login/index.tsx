@@ -59,7 +59,6 @@ const Login = () => {
 
   return (
     <Container maxWidth="lg" className={classes.container}>
-      {goHome && <Redirect to="/"/>}
       <form className={classes.form}>
         {!loading
           ? (
@@ -107,6 +106,7 @@ const Login = () => {
           </Link>
         </div>
       </form>
+      {goHome && <Redirect to="/"/>}
     </Container>
   );
 };
