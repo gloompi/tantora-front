@@ -30,6 +30,9 @@ const LoadableLogin = loadable(() => import("components/Login"), {
 const LoadableAdmins = loadable(() => import("components/Admin"), {
   fallback: <Loading />
 });
+const LoadableRegistration = loadable(() => import("components/Registration"), {
+  fallback: <Loading />
+});
 
 const client = new ApolloClient({
   uri: env.backendUrl,
@@ -51,6 +54,9 @@ const App: FC = () => (
               </Route>
               <Route path="/login">
                 <LoadableLogin />
+              </Route>
+              <Route path="/register">
+                <LoadableRegistration />
               </Route>
             </Switch>
             <Footer />

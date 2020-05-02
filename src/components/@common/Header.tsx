@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
 
 import { LogoutResponse } from 'generated/graphql';
 import useStore from 'hooks/useStore';
@@ -31,17 +30,19 @@ const Header = observer(() => {
   const classes = useStyles();
 
   const handleLogout = async () => {
-    const res = await client.query<{logout: LogoutResponse}>({
-      query: LogoutQuery,
-      variables: {
-        token: authStore.authToken,
-      }
-    });
-
-    if (res.data.logout.deleted) {
-      client.resetStore();
-      authStore.clear();
+    try {
+      await client.query<{logout: LogoutResponse}>({
+        query: LogoutQuery,
+        variables: {
+          token: authStore.authToken,
+        }
+      });
+    } catch (error) {
+      console.log('TOKEN EXPIRED', error)
     }
+
+    client.resetStore();
+    authStore.clear();
   };
 
   const handleToggleMenu = (open: boolean) => () => {
@@ -62,11 +63,6 @@ const Header = observer(() => {
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/admins">
-            <IconButton edge="start" className={classes.menuButton} color="default" aria-label="menu">
-              <HomeIcon />
-            </IconButton>
-          </Link>
           <Typography variant="h6" className={classes.title}>
             `Online Exhibition`
           </Typography>
