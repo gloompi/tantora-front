@@ -112,19 +112,8 @@ const Login = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 'calc(100vh - 128px)',
-  },
-  form: {
-    width: '100%',
-    maxWidth: '400px',
-    padding: '25px 50px',
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: 5,
-  },
+  container: theme.mixins.container,
+  form: theme.mixins.form,
   title: {
     marginBottom: 25,
   },
