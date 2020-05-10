@@ -19,7 +19,7 @@ import { PrivateClientProvider } from 'hooks/usePrivateClient';
 import Loading from 'components/@common/Loading';
 import Header from 'components/@common/Header';
 import Footer from 'components/@common/Footer';
-
+import Home from 'components/Home/index'
 // loadable components
 const LoadableUsers = loadable(() => import("components/Users"), {
   fallback: <Loading />
@@ -45,6 +45,7 @@ const App: FC = () => (
         <ThemeProvider theme={theme}>
           <Router>
             <Header />
+            <Home />
             <Switch>
               <Route path="/" exact>
                 <LoadableUsers />
