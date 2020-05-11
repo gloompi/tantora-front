@@ -44,7 +44,7 @@ const Events: FC = () => {
                         <p className="text">{item.description}</p>
                         <div>
                             <p className="date">Data: {item.startDate}</p>
-                            <button color="primary">Join</button>
+                            <button color="primary">Joinchange</button>
                         </div>
                     </div>
                 ))}
