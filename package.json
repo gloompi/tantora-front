@@ -92,6 +92,10 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "lint": "tslint --project .",
+    "check": "yarn run lint && yarn run typecheck",
     "test": "node scripts/test.js",
     "generate": "graphql-codegen --config codegen.js"
   },
@@ -112,7 +116,13 @@
   },
   "devDependencies": {
     "graphql-code-generator": "^0.18.2",
-    "graphql-codegen-typescript-react-apollo-template": "^0.18.2"
+    "graphql-codegen-typescript-react-apollo-template": "^0.18.2",
+    "prettier": "^2.0.5",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-loader": "^3.5.4",
+    "tslint-plugin-prettier": "^2.3.0",
+    "tslint-react": "^5.0.0"
   },
   "jest": {
     "roots": [

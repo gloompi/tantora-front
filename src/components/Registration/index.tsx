@@ -49,27 +49,27 @@ const Login = () => {
   const { authStore } = useStore();
   const classes = useStyles();
 
-  const disabled = isEmpty(userName)
-    || isEmpty(password)
-    || isEmpty(email)
-    || isEmpty(firstName)
-    || isEmpty(lastName)
-    || isEmpty(dateOB);
+  const disabled =
+    isEmpty(userName) ||
+    isEmpty(password) ||
+    isEmpty(email) ||
+    isEmpty(firstName) ||
+    isEmpty(lastName) ||
+    isEmpty(dateOB);
 
-  const [register, { loading, error, data, called }] = useMutation<{ createUser: CreateUserResponse }>(
-    CreateUserMutation,
-    {
-      variables: {
-        userName,
-        password,
-        email,
-        firstName,
-        lastName,
-        phone,
-        dateOfBirth: dateOB,
-      }
-    }
-  );
+  const [register, { loading, error, data, called }] = useMutation<{
+    createUser: CreateUserResponse;
+  }>(CreateUserMutation, {
+    variables: {
+      userName,
+      password,
+      email,
+      firstName,
+      lastName,
+      phone,
+      dateOfBirth: dateOB,
+    },
+  });
 
   // input handlers
   const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -109,17 +109,13 @@ const Login = () => {
   return (
     <Container maxWidth="lg" className={classes.container}>
       <form className={classes.form}>
-        {!loading
-          ? (
-            <Typography
-              className={classes.title}
-              variant="h4"
-              color="secondary"
-            >
-              Create New User
-            </Typography>
-          ) : <Loading />
-        }
+        {!loading ? (
+          <Typography className={classes.title} variant="h4" color="secondary">
+            Create New User
+          </Typography>
+        ) : (
+          <Loading />
+        )}
         <TextField
           label="Username"
           value={userName}
@@ -127,8 +123,8 @@ const Login = () => {
           className={classes.input}
           onChange={handleUsernameChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <TextField
           type="password"
@@ -138,8 +134,8 @@ const Login = () => {
           className={classes.input}
           onChange={handlePasswordChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <TextField
           label="Email"
@@ -149,8 +145,8 @@ const Login = () => {
           className={classes.input}
           onChange={handleEmailChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <TextField
           label="First name"
@@ -159,8 +155,8 @@ const Login = () => {
           className={classes.input}
           onChange={handleFirstNameChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <TextField
           label="Last name"
@@ -169,8 +165,8 @@ const Login = () => {
           className={classes.input}
           onChange={handleLastNameChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <TextField
           label="Phone"
@@ -179,7 +175,7 @@ const Login = () => {
           className={classes.input}
           onChange={handlePhoneChange}
           disabled={loading}
-          fullWidth
+          fullWidth={true}
         />
         <TextField
           label="Date of birth"
@@ -192,8 +188,8 @@ const Login = () => {
           InputLabelProps={{
             shrink: true,
           }}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <Button
           variant="contained"
@@ -204,7 +200,7 @@ const Login = () => {
           Register
         </Button>
       </form>
-      {goLogin && <Redirect to="/login"/>}
+      {goLogin && <Redirect to="/login" />}
     </Container>
   );
 };
@@ -225,10 +221,10 @@ const useStyles = makeStyles((theme) => ({
 
     '& > button': {
       '&:first-child': {
-        marginRight: 25
-      }
-    }
-  }
+        marginRight: 25,
+      },
+    },
+  },
 }));
 
 export default Login;

@@ -27,11 +27,7 @@ const Menu: FC<IProps> = ({ open, handleClose }) => {
 
   return (
     <div>
-      <Drawer
-        anchor="left"
-        open={open}
-        onClose={handleClose}
-      >
+      <Drawer anchor="left" open={open} onClose={handleClose}>
         <div
           className={classes.list}
           role="presentation"
@@ -41,16 +37,21 @@ const Menu: FC<IProps> = ({ open, handleClose }) => {
           <List>
             {NAV_ITEMS.map(({ label, link, icon }) => (
               <Link to={link} key={label}>
-                <ListItem className={classes.button} color="secondary" key={label} button>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText primary={label} />
+                <ListItem
+                  className={classes.button}
+                  color="secondary"
+                  key={label}
+                  button={true}
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={label} />
                 </ListItem>
               </Link>
             ))}
           </List>
           <Divider />
-          <List>
-          </List>
+          {/* <List>
+          </List> */}
         </div>
       </Drawer>
     </div>
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     color: theme.palette.common.white,
-  }
+  },
 }));
 
 export default Menu;

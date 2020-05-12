@@ -33,7 +33,9 @@ const Login = () => {
   const { authStore } = useStore();
   const classes = useStyles();
 
-  const [handleLogin, { loading, error, data, called }] = useLazyQuery<{ loginUser: LoginResponse }>(LoginUserQuery, { variables: { userName, password } });
+  const [handleLogin, { loading, error, data, called }] = useLazyQuery<{
+    loginUser: LoginResponse;
+  }>(LoginUserQuery, { variables: { userName, password } });
 
   const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setUsername(e.target.value);
@@ -46,13 +48,13 @@ const Login = () => {
   if (called && !goHome) {
     const authToken = get(data, 'loginUser.token.accessToken', '');
     const refreshToken = get(data, 'loginUser.token.refreshToken', '');
-    
+
     if (!isEmpty(authToken) && !isEmpty(refreshToken)) {
       localStorage.setItem('authToken', authToken);
       localStorage.setItem('refreshToken', refreshToken);
       authStore.setAuthToken(authToken);
       authStore.setRefreshToken(refreshToken);
-      
+
       setGoHome(true);
     }
   }
@@ -60,17 +62,13 @@ const Login = () => {
   return (
     <Container maxWidth="lg" className={classes.container}>
       <form className={classes.form}>
-        {!loading
-          ? (
-            <Typography
-              className={classes.title}
-              variant="h4"
-              color="secondary"
-            >
-              <VpnKey /> Login
-            </Typography>
-          ) : <Loading />
-        }
+        {!loading ? (
+          <Typography className={classes.title} variant="h4" color="secondary">
+            <VpnKey /> Login
+          </Typography>
+        ) : (
+          <Loading />
+        )}
         <TextField
           label="Username"
           value={userName}
@@ -78,8 +76,8 @@ const Login = () => {
           className={classes.input}
           onChange={handleUsernameChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <TextField
           type="password"
@@ -89,8 +87,8 @@ const Login = () => {
           className={classes.input}
           onChange={handlePasswordChange}
           disabled={loading}
-          fullWidth
-          required
+          fullWidth={true}
+          required={true}
         />
         <div className={classes.buttonsWrapper}>
           <Button
@@ -102,11 +100,13 @@ const Login = () => {
             Confirm
           </Button>
           <Link to="/register">
-            <Button variant="outlined" color="primary" disabled={loading}>Register</Button>
+            <Button variant="outlined" color="primary" disabled={loading}>
+              Register
+            </Button>
           </Link>
         </div>
       </form>
-      {goHome && <Redirect to="/"/>}
+      {goHome && <Redirect to="/" />}
     </Container>
   );
 };
@@ -127,10 +127,10 @@ const useStyles = makeStyles((theme) => ({
 
     '& > button': {
       '&:first-child': {
-        marginRight: 25
-      }
-    }
-  }
+        marginRight: 25,
+      },
+    },
+  },
 }));
 
 export default Login;

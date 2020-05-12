@@ -16,7 +16,7 @@ import usePrivateClient from 'hooks/usePrivateClient';
 import Menu from 'components/@common/Menu';
 
 const LogoutQuery = gql`
-  query ($token: String!){
+  query($token: String!) {
     logout(token: $token) {
       deleted
     }
@@ -31,14 +31,14 @@ const Header = observer(() => {
 
   const handleLogout = async () => {
     try {
-      await client.query<{logout: LogoutResponse}>({
+      await client.query<{ logout: LogoutResponse }>({
         query: LogoutQuery,
         variables: {
           token: authStore.authToken,
-        }
+        },
       });
     } catch (error) {
-      console.log('TOKEN EXPIRED', error)
+      throw new Error(error);
     }
 
     client.resetStore();
@@ -66,14 +66,15 @@ const Header = observer(() => {
           <Typography variant="h6" className={classes.title}>
             `Online Exhibition`
           </Typography>
-          {authStore.isAuth
-            ? <Button className={classes.login} onClick={handleLogout}>Logout</Button>
-            : (
-              <Link to="/login" style={{ textDecoration: 'none' }}>
-                <Button className={classes.login}>Login</Button>
-              </Link>
-            )
-          }
+          {authStore.isAuth ? (
+            <Button className={classes.login} onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <Button className={classes.login}>Login</Button>
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
     </div>
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   login: {
     color: '#fff',
     border: 'none',
-  }
+  },
 }));
 
 export default Header;

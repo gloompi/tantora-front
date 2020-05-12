@@ -6,16 +6,16 @@ class AuthStore {
   @observable private _refreshToken: string;
 
   @computed public get isAuth(): boolean {
-    return !isEmpty(this._authToken) ? true : false
-  };
+    return !isEmpty(this._authToken) ? true : false;
+  }
 
   @computed public get authToken(): string {
     return this._authToken;
-  };
+  }
 
   @computed public get refreshToken(): string {
     return this._refreshToken;
-  };
+  }
 
   constructor() {
     const authToken = localStorage.getItem('authToken');

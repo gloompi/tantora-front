@@ -10,13 +10,15 @@ const privateClient = new ApolloClient({
 
     operation.setContext({
       headers: {
-        Authorization: token ? `Bearer ${token}` : ''
+        Authorization: token ? `Bearer ${token}` : '',
       },
     });
   },
 });
 
-const PrivateClientContext = createContext<ApolloClient<unknown>>(privateClient);
+const PrivateClientContext = createContext<ApolloClient<unknown>>(
+  privateClient
+);
 
 export const PrivateClientProvider: FC = ({ children }) => (
   <PrivateClientContext.Provider value={privateClient}>
@@ -28,7 +30,9 @@ export default () => {
   const client = useContext(PrivateClientContext);
 
   if (!client) {
-    throw new Error('`PrivateClientProvider` need to be defined higher up in the tree');
+    throw new Error(
+      '`PrivateClientProvider` need to be defined higher up in the tree'
+    );
   }
 
   return client;

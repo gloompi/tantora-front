@@ -22,21 +22,24 @@ const ADMIN = gql`
 `;
 
 interface IResponse {
-  admins: User[]
+  admins: User[];
 }
 
 const Admin: FC = observer(() => {
   useAuthRoute();
-  const client = usePrivateClient()
+  const client = usePrivateClient();
   const { loading, error, data } = useQuery<IResponse>(ADMIN, { client });
 
   if (loading) return <div className="wrapper">Loading...</div>;
   if (error) {
     return (
+      /* tslint:disable */
       <div className="wrapper centralized">
         You probably need to 
         <Link to="/login">
-          <Button>Login <VpnKey /></Button>
+          <Button>
+            Login <VpnKey />
+          </Button>
         </Link>
       </div>
     );

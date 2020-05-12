@@ -17,11 +17,13 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position="static" color="secondary">
         <Toolbar>
-          <Typography>&copy; {new Date().getFullYear()} Online Exhibition</Typography>
+          <Typography>
+            &copy; {new Date().getFullYear()} Online Exhibition
+          </Typography>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
 
 export default Header;

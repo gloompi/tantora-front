@@ -4,9 +4,7 @@ import rootStore, { RootStore } from 'stores/rootStore';
 const StoreContext = createContext<RootStore>(rootStore);
 
 export const StoreProvider: FC = ({ children }) => (
-  <StoreContext.Provider value={rootStore}>
-    {children}
-  </StoreContext.Provider>
+  <StoreContext.Provider value={rootStore}>{children}</StoreContext.Provider>
 );
 
 export default () => {

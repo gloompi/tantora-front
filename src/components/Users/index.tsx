@@ -22,7 +22,7 @@ const USERS = gql`
 `;
 
 interface IResponse {
-  users: User[]
+  users: User[];
 }
 
 const Users: FC = () => {
@@ -35,15 +35,16 @@ const Users: FC = () => {
   return (
     <Container maxWidth="lg" className={classes.container}>
       <ul className="users__list">
-        {(data !== undefined) && data.users.map(user => (
-          <li key={user.userId!} className="users__item">
-            <p>{user.userName}</p>
-            <p>{user.firstName}</p>
-            <p>{user.lastName}</p>
-            <p>{user.email}</p>
-            <p>{user.phone}</p>
-          </li>
-        ))}
+        {data !== undefined &&
+          data.users.map((user) => (
+            <li key={user.userId!} className="users__item">
+              <p>{user.userName}</p>
+              <p>{user.firstName}</p>
+              <p>{user.lastName}</p>
+              <p>{user.email}</p>
+              <p>{user.phone}</p>
+            </li>
+          ))}
       </ul>
     </Container>
   );
@@ -52,7 +53,7 @@ const Users: FC = () => {
 const useStyles = makeStyles(() => ({
   container: {
     minHeight: 'calc(100vh - 128px)',
-  }
+  },
 }));
 
 export default Users;

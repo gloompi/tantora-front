@@ -8,8 +8,8 @@ let theme = createMuiTheme({
     secondary: blueGrey,
     common: {
       white: '#fff',
-    }
-  }
+    },
+  },
 });
 
 theme = {
@@ -21,7 +21,7 @@ theme = {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: 'calc(100vh - 128px)',
-      padding: '50px 0'
+      padding: '50px 0',
     },
     form: {
       width: '100%',
@@ -30,7 +30,7 @@ theme = {
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 5,
     },
-  }
-}
+  },
+};
 
 export default theme;
