@@ -1,29 +1,32 @@
 import React, { FC } from 'react'
 
-import { makeStyles } from '@material-ui/core';
-
-
-import './style.scss'
 import Search from './Search'
 import Events from './Events'
+import About from './AboutProject'
+
+import { makeStyles } from '@material-ui/core'
+
 
 
 const Home: FC = () => {
-    const classes = useStyle();
-    return (
-    <div className={classes.text}>
-        Hello Kuba!
-        <Search />
-        <Events />
+  const classes = useStyles()
+  return (
+    <div className={classes.container}>
+      Hello Kuba!
+      <Search />
+      <Events />
+      <About />
     </div>
-    )
+  )
 }
 
-const useStyle = makeStyles((theme) => ({
-    text: {
-        color: theme.palette.primary.main,
-        fontSize: 16
-    }
+const useStyles = makeStyles((theme) => ({
+  container: {
+    textAlign: 'center',
+    padding: '5px'
+  }
+
 }))
+
 
 export default Home;
