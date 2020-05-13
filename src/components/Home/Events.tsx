@@ -1,50 +1,45 @@
-import React, { useState, FC } from 'react';
-import { Exhibition } from 'generated/graphql';
+import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks'
+
+import { Exhibition } from 'generated/graphql';
+
+const GET_EXHIBITONS = gql`
+  query {
+    exhibitions {
+      exhibitionId 
+      name
+      description
+      startDate
+    }
+  }
+`
+interface IResponse {
+  exhibitions: Exhibition[];
+}
 
 const Events: FC = () => {
   const classes = useStyles();
-  const [items] = useState([
-    {
-      name: 'Name of the Exebition',
-      description:
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
-      startDate: '21.05.2020',
-      exhibitionId: `1`,
-    },
-    {
-      name: 'Name of the Exebition',
-      description:
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
-      startDate: '21.05.2020',
-      exhibitionId: `2`,
-    },
-    {
-      name: 'Name of the Exebition',
-      description:
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
-      startDate: '21.05.2020',
-      exhibitionId: `3`,
-    },
-    {
-      name: 'Name of the Exebition',
-      description:
-        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.',
-      startDate: '21.05.2020',
-      exhibitionId: `4`,
-    },
-  ]);
+  const { data, loading, error } = useQuery<IResponse>(GET_EXHIBITONS);
 
+  if (loading) {
+    return <div>Loading</div>
+  }
+  if (error) {
+    return <div>Something went wrong!</div>
+  };
+  
   return (
     <div className={classes.container}>
       <h1>Up coming online exhibitions</h1>
-      {items.map((item: Exhibition) => (
-        <div className={classes.event} key={item.exhibitionId!}>
-          <h2 className={classes.h1}>{item.name}</h2>
-          <p className={classes.text}>{item.description}</p>
+      {data!.exhibitions.map(({ exhibitionId, name, description, startDate}) => (
+        <div className={classes.event} key={exhibitionId!}>
+          <h2 className={classes.h1}>{name}</h2>
+          <p className={classes.text}>{description!.length < 150 ? description : (description!.slice(0, 250)+' . . .')}</p>
           <div className={classes.boxForDataBtn}>
-            <p className={classes.data}>Data: {item.startDate}</p>
+            <p className={classes.data}>{new Date(startDate ? startDate : 'Something is wrong or Date is unavailable').toString()}</p>
             <Button className={classes.button}>Join</Button>
           </div>
         </div>
@@ -74,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     fontSize: 18,
+    height: 80
   },
   data: {
     fontSize: 20,
