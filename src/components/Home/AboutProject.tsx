@@ -1,15 +1,15 @@
 import React, { FC } from 'react'
-
 import { makeStyles } from '@material-ui/core'
-import { Paper, Tab, AppBar, Typography, Box} from '@material-ui/core'
+import Tab from '@material-ui/core/Tab'
+import AppBar from '@material-ui/core/AppBar'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 import Tabs from '@material-ui/core/Tabs';
-import PropTypes from 'prop-types';
 
 const text = "Online fair is a platform for organizing virtual exhibitions, offering a whole range of software solutions and additional servicesfor the entire exhibition industry Online fair brings together exhibition centers and exhibition organizers into a single network. Which Will serve as an economical and effective tool for promoting products and services to international markets and developing international trade relations"
 
-function TabPanel(props:any) {
+const TabPanel = (props:any) => {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -26,36 +26,22 @@ function TabPanel(props:any) {
     </div>
   );
 }
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-function a11yProps(index: any) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const About: FC = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const handleChange = (event:any, newValue:any) => {
+  const handleChange = (event:any, newValue:number) => {
     setValue(newValue);
   }; 
-
   return (
-    <div className={classes.container}>
+    <div>
       <h1 className={classes.title}>About The Project</h1>
       <p className={classes.text}>{text}</p>
-
       <div className={classes.root}>
         <AppBar position="static">
-          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" className={classes.tabs}>
-            <Tab label="Visitors" {...a11yProps(0)} />
-            <Tab label="Exhibitions" {...a11yProps(1)} />
-            <Tab label="Organizations" {...a11yProps(2)} />
+          <Tabs value={value} onChange={handleChange} className={classes.tabs}>
+            <Tab label="Visitors" />
+            <Tab label="Exhibitions" />
+            <Tab label="Organizations"  />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
@@ -77,17 +63,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     margin: '20px 30px 100px',
     alignItems: 'center',
-    
-    //backgroundColor: 'white'
   },
   tabs: {
     backgroundColor: 'white',
-    textAlign: 'center',
     color: 'black'
   },
-  container: {
-  },
-  
   title: {
     textAlign: 'center'
   },
@@ -97,7 +77,5 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 60px",
     fontWeight: "bolder"
   }
-
 }))
-
 export default About

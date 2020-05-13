@@ -1,12 +1,8 @@
 import React, { FC } from 'react'
-
 import Search from './Search'
 import Events from './Events'
 import About from './AboutProject'
-
 import { makeStyles } from '@material-ui/core'
-
-
 
 const Home: FC = () => {
   const classes = useStyles()
@@ -19,14 +15,11 @@ const Home: FC = () => {
     </div>
   )
 }
-
 const useStyles = makeStyles((theme) => ({
   container: {
     textAlign: 'center',
     padding: '5px'
   }
-
-}))
-
-
+})
+)
 export default Home;

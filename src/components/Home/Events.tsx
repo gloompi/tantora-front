@@ -1,12 +1,7 @@
 import React, { useState, FC } from 'react'
-
 import { Exhibition } from 'generated/graphql'
 import { makeStyles } from '@material-ui/core'
 import { Button } from '@material-ui/core';
-
-
-
-
 
 const Events: FC = () => {
   const classes = useStyles();
@@ -52,7 +47,6 @@ const Events: FC = () => {
     </div>
   ) 
 }
-
 const useStyles = makeStyles((theme) => ({
   container: {
     width: `100%`,
@@ -94,6 +88,4 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
   }
 }))
-
-
 export default Events;
