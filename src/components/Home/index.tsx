@@ -9,7 +9,6 @@ const Home: FC = () => {
 
   return (
     <div className={classes.container}>
-      Hello Kuba!
       <Search />
       <Events />
       <About />
