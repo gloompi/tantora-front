@@ -3,4 +3,6 @@ node_modules
 package.json
 package-lock.json
 public
+build
+scripts
 **/generated/graphql.tsx

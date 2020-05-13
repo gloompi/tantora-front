@@ -17,7 +17,7 @@ import Header from 'components/@common/Header';
 import Footer from 'components/@common/Footer';
 
 // loadable components
-const LoadableUsers = loadable(() => import('components/Users'), {
+const LoadableHome = loadable(() => import('components/Home'), {
   fallback: <Loading />,
 });
 const LoadableLogin = loadable(() => import('components/Login'), {
@@ -43,7 +43,7 @@ const App: FC = () => (
             <Header />
             <Switch>
               <Route path="/" exact={true}>
-                <LoadableUsers />
+                <LoadableHome />
               </Route>
               <Route path="/admins">
                 <LoadableAdmins />

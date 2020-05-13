@@ -35,7 +35,7 @@ const Admin: FC = observer(() => {
     return (
       /* tslint:disable */
       <div className="wrapper centralized">
-        You probably need to 
+        You probably need to
         <Link to="/login">
           <Button>
             Login <VpnKey />
@@ -48,14 +48,15 @@ const Admin: FC = observer(() => {
   return (
     <div className="wrapper">
       <ul className="admins__list">
-        {(data !== undefined) && data.admins.map(admin => (
-          <li key={admin.userId!} className="admin__item">
-            <p>{admin.userName}</p>
-          </li>
-        ))}
+        {data !== undefined &&
+          data.admins.map((admin) => (
+            <li key={admin.userId!} className="admin__item">
+              <p>{admin.userName}</p>
+            </li>
+          ))}
       </ul>
     </div>
-  )
+  );
 });
 
 export default Admin;

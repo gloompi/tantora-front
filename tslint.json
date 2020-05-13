@@ -15,7 +15,7 @@
     "no-boolean-literal-compare": false,
     "no-implicit-dependencies": false,
     "no-submodule-imports": false,
-    "object-literal-sort-keys": false,
+    "newline-before-return": true,
     "ordered-imports": false,
     "no-var-requires": false,
     "member-ordering": false,
