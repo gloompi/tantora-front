@@ -28,9 +28,11 @@ const TabPanel = (props: any) => {
     </div>
   );
 };
+
 const About: FC = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
   const handleChange = (_: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
