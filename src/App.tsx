@@ -63,4 +63,4 @@ const App: FC = () => (
   </ApolloProvider>
 );
 
-export default App
+export default App;
