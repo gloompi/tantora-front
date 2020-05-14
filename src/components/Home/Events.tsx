@@ -8,7 +8,7 @@ import { Exhibition } from 'generated/graphql';
 
 const GET_EXHIBITONS = gql`
   query {
-    exhibitions {
+    exhibitions(limit: 6) {
       exhibitionId
       name
       description
