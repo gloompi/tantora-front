@@ -16,7 +16,12 @@ const MyTabs: FC = () => {
   return (
     <div>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} className={classes.tabs}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          className={classes.tabs}
+          textColor="primary"
+        >
           <Tab label="Visitors" />
           <Tab label="Exhibitions" />
           <Tab label="Organizations" />
@@ -34,11 +39,11 @@ const MyTabs: FC = () => {
     </div>
   );
 };
-const useStyles = makeStyles({
+
+const useStyles = makeStyles((theme) => ({
   tabs: {
-    backgroundColor: 'white',
-    color: 'black',
+    backgroundColor: theme.palette.background.paper,
   },
-});
+}));
 
 export default MyTabs;

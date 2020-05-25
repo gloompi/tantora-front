@@ -20,8 +20,8 @@ theme = {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: 'calc(100vh - 128px)',
-      padding: '50px 0',
+      minHeight: 'calc(100vh - 64px)',
+      padding: '150px 0',
     },
     form: {
       width: '100%',

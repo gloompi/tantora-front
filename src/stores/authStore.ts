@@ -10,11 +10,15 @@ class AuthStore {
   }
 
   @computed public get authToken(): string {
-    return this._authToken;
+    const authToken = localStorage.getItem('authToken') || '';
+
+    return this._authToken || authToken;
   }
 
   @computed public get refreshToken(): string {
-    return this._refreshToken;
+    const refreshToken = localStorage.getItem('refreshToken') || '';
+
+    return this._refreshToken || refreshToken;
   }
 
   constructor() {
@@ -33,10 +37,12 @@ class AuthStore {
   };
 
   @action public setAuthToken = (token: string): void => {
+    localStorage.setItem('authToken', token);
     this._authToken = token;
   };
 
   @action public setRefreshToken = (token: string): void => {
+    localStorage.setItem('refreshToken', token);
     this._refreshToken = token;
   };
 }

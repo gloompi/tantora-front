@@ -11,7 +11,6 @@ import './App.scss';
 import theme from 'theme';
 import env from '@config/env';
 import { StoreProvider } from 'hooks/useStore';
-import { PrivateClientProvider } from 'hooks/usePrivateClient';
 import Loading from 'components/@common/Loading';
 import Header from 'components/@common/Header';
 import Footer from 'components/@common/Footer';
@@ -32,34 +31,41 @@ const LoadableRegistration = loadable(() => import('components/Registration'), {
 
 const client = new ApolloClient({
   uri: env.backendUrl,
+  request: (operation) => {
+    const token = localStorage.getItem('authToken');
+
+    operation.setContext({
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    });
+  },
 });
 
 const App: FC = () => (
   <ApolloProvider client={client}>
-    <PrivateClientProvider>
-      <StoreProvider>
-        <ThemeProvider theme={theme}>
-          <Router>
-            <Header />
-            <Switch>
-              <Route path="/" exact={true}>
-                <LoadableHome />
-              </Route>
-              <Route path="/admins">
-                <LoadableAdmins />
-              </Route>
-              <Route path="/login">
-                <LoadableLogin />
-              </Route>
-              <Route path="/register">
-                <LoadableRegistration />
-              </Route>
-            </Switch>
-            <Footer />
-          </Router>
-        </ThemeProvider>
-      </StoreProvider>
-    </PrivateClientProvider>
+    <StoreProvider>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/" exact={true}>
+              <LoadableHome />
+            </Route>
+            <Route path="/admins">
+              <LoadableAdmins />
+            </Route>
+            <Route path="/login">
+              <LoadableLogin />
+            </Route>
+            <Route path="/register">
+              <LoadableRegistration />
+            </Route>
+          </Switch>
+          <Footer />
+        </Router>
+      </ThemeProvider>
+    </StoreProvider>
   </ApolloProvider>
 );
 

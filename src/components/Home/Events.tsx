@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
-import { makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import { Exhibition } from 'generated/graphql';
+import Loading from 'components/@common/Loading';
 
 const GET_EXHIBITONS = gql`
   query {
@@ -16,6 +18,7 @@ const GET_EXHIBITONS = gql`
     }
   }
 `;
+
 interface IResponse {
   exhibitions: Exhibition[];
 }
@@ -25,82 +28,89 @@ const Events: FC = () => {
   const { data, loading, error } = useQuery<IResponse>(GET_EXHIBITONS);
 
   if (loading) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
+
   if (error) {
-    return <div>Something went wrong!</div>;
+    return (
+      <Typography color="error">
+        Error occured during fetching events: ${error}!
+      </Typography>
+    );
   }
 
   return (
-    <div className={classes.container}>
-      <h1>Up coming online exhibitions</h1>
-      {data!.exhibitions.map(
-        ({ exhibitionId, name, description, startDate }) => (
-          <div className={classes.event} key={exhibitionId!}>
-            <h2 className={classes.h1}>{name}</h2>
-            <p className={classes.text}>
-              {description!.length < 150
-                ? description
-                : description!.slice(0, 250) + '·.·.·.'}
-            </p>
-            <div className={classes.boxForDataBtn}>
-              <p className={classes.data}>
-                {new Date(
-                  startDate
-                    ? startDate
-                    : 'Something is wrong or Date is unavailable'
-                ).toString()}
-              </p>
-              <Button className={classes.button}>Join</Button>
-            </div>
-          </div>
-        )
-      )}
-    </div>
+    <section className={classes.wrapper}>
+      <Typography variant="h4" className={classes.title}>
+        Up coming online exhibitions
+      </Typography>
+      <div className={classes.container}>
+        {data!.exhibitions.map(
+          ({ exhibitionId, name, description, startDate }) => {
+            const date = new Date(startDate!);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
+            return (
+              <div className={classes.event} key={exhibitionId!}>
+                <Typography variant="h6" color="textPrimary">
+                  {name}
+                </Typography>
+                <Typography className={classes.text} variant="subtitle2">
+                  {description!.length < 150
+                    ? description
+                    : description!.slice(0, 250) + '·.·.·.'}
+                </Typography>
+                <div className={classes.boxForDateBtn}>
+                  <Typography variant="body2">
+                    {`start date: ${year}/${month}/${day}`}
+                  </Typography>
+                  <Button color="secondary" variant="contained">
+                    Join
+                  </Button>
+                </div>
+              </div>
+            );
+          }
+        )}
+      </div>
+    </section>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    width: `100%`,
+const useStyles = makeStyles({
+  wrapper: {
+    width: '100%',
+    maxWidth: 1170,
+    margin: '0 auto 150px',
+  },
+  title: {
     textAlign: 'center',
+    marginBottom: 25,
   },
-  event: {
-    textAlign: `left`,
-    backgroundColor: 'rgb(147, 147, 148)',
-    width: 600,
-    padding: '25px 20px 10px',
-    margin: 10,
-    display: 'inline-block',
-    borderRadius: 5,
-  },
-  h1: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  text: {
-    fontSize: 18,
-    height: 80,
-  },
-  data: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  boxForDataBtn: {
+  container: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '0px -11px',
+    flexWrap: 'wrap',
+    width: `100%`,
   },
-  button: {
-    margin: '5px 20px 10px',
-    width: 100,
-    height: 30,
-    backgroundColor: theme.palette.primary.light,
+  event: {
+    textAlign: 'left',
+    width: '49%',
+    padding: '15px 20px',
+    marginBottom: 25,
+    backgroundColor: 'rgb(147, 147, 148)',
     borderRadius: 5,
-    border: 'none',
   },
-}));
+  text: {
+    height: 80,
+  },
+  boxForDateBtn: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
+});
 
 export default Events;

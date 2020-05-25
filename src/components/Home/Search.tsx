@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 
 const Search: FC = () => {
@@ -10,22 +11,24 @@ const Search: FC = () => {
       <label htmlFor="text" className={classes.label}>
         Keep in touch with all online exebitions
       </label>
-      <input
+      <Input
         type="text"
         className={classes.input}
         placeholder="What are you looking for..."
       />
-      <Button color="primary" className={classes.button}>
+      <Button color="primary" variant="contained" className={classes.button}>
         Search
       </Button>
     </div>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   searchField: {
+    position: 'relative',
     width: '100%',
-    padding: '220px 10% 60px',
+    maxWidth: 1170,
+    margin: '0 auto 150px',
   },
   label: {
     display: 'flex',
@@ -35,18 +38,19 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '100%',
-    height: 39,
+    height: 35,
+    padding: '25px 15px',
     borderRadius: 4,
-    border: 'solid 1px black',
     zIndex: 100,
   },
   button: {
     position: 'absolute',
     justifyContent: 'right',
-    right: '10.2%',
+    right: 0,
     marginTop: 1,
     marginRight: 1,
-    backgroundColor: theme.palette.primary.light,
+    zIndex: 150,
   },
-}));
+});
+
 export default Search;

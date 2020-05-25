@@ -1,16 +1,15 @@
 import React, { FC } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import Button from '@material-ui/core/Button';
-import VpnKey from '@material-ui/icons/VpnKey';
+import Typography from '@material-ui/core/Typography';
 
 import './style.scss';
 
-import useAuthRoute from 'hooks/useAuthRoute';
-import usePrivateClient from 'hooks/usePrivateClient';
 import { User } from 'generated/graphql';
+import useStore from 'hooks/useStore';
+import Loading from 'components/@common/Loading';
 
 const ADMIN = gql`
   {
@@ -26,22 +25,20 @@ interface IResponse {
 }
 
 const Admin: FC = observer(() => {
-  useAuthRoute();
-  const client = usePrivateClient();
+  const client = useApolloClient();
+  const { authStore } = useStore();
+
+  if (!authStore.isAuth) return <Redirect to="/" />;
+
   const { loading, error, data } = useQuery<IResponse>(ADMIN, { client });
 
-  if (loading) return <div className="wrapper">Loading...</div>;
+  if (loading) return <Loading />;
+
   if (error) {
     return (
-      /* tslint:disable */
-      <div className="wrapper centralized">
-        You probably need to
-        <Link to="/login">
-          <Button>
-            Login <VpnKey />
-          </Button>
-        </Link>
-      </div>
+      <Typography color="error">
+        Error occured during fetching admins: ${error}!
+      </Typography>
     );
   }
 

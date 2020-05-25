@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import MyTabs from './Tabs';
 
@@ -10,30 +11,30 @@ const About: FC = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <h1 className={classes.title}>About The Project</h1>
-      <p className={classes.text}>{text}</p>
-      <div className={classes.root}>
-        <MyTabs />
-      </div>
+    <div className={classes.root}>
+      <Typography variant="h4" className={classes.title}>
+        About The Project
+      </Typography>
+      <Typography className={classes.text}>{text}</Typography>
+      <MyTabs />
     </div>
   );
 };
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1,
-    margin: '20px 30px 100px',
-    alignItems: 'center',
+    width: '100%',
+    maxWidth: 1170,
+    margin: '0 auto 150px',
   },
   title: {
     textAlign: 'center',
+    marginBottom: 25,
   },
   text: {
     fontSize: 18,
     textAlign: 'left',
-    padding: '10px 60px',
-    fontWeight: 'bolder',
+    margin: '25px 0',
   },
 });
 

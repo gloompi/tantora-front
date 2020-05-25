@@ -1,8 +1,8 @@
 import React, { useState, ChangeEventHandler } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { gql } from 'apollo-boost';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
+import { gql } from 'apollo-boost';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import Container from '@material-ui/core/Container';
@@ -29,7 +29,6 @@ const LoginUserQuery = gql`
 const Login = () => {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [goHome, setGoHome] = useState(false);
   const { authStore } = useStore();
   const classes = useStyles();
 
@@ -45,17 +44,15 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  if (called && !goHome) {
+  if (called) {
     const authToken = get(data, 'loginUser.token.accessToken', '');
     const refreshToken = get(data, 'loginUser.token.refreshToken', '');
 
     if (!isEmpty(authToken) && !isEmpty(refreshToken)) {
-      localStorage.setItem('authToken', authToken);
-      localStorage.setItem('refreshToken', refreshToken);
       authStore.setAuthToken(authToken);
       authStore.setRefreshToken(refreshToken);
 
-      setGoHome(true);
+      return <Redirect to="/" />;
     }
   }
 
@@ -106,7 +103,6 @@ const Login = () => {
           </Link>
         </div>
       </form>
-      {goHome && <Redirect to="/" />}
     </Container>
   );
 };
