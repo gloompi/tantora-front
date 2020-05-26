@@ -8,6 +8,9 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import useStore from 'hooks/useStore';
 import { CreateUserResponse } from 'generated/graphql';
@@ -47,7 +50,9 @@ const Login = () => {
   const [dateOB, setDateOB] = useState('');
   const [goLogin, setGoLogin] = useState(false);
   const { authStore } = useStore();
+  const [userType, setUserType] = useState('Client');
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const disabled =
     isEmpty(userName) ||
@@ -93,6 +98,9 @@ const Login = () => {
   const handleDateOBChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setDateOB(e.target.value);
   };
+  const handleTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setUserType(event.target.value as string);
+  };
 
   // register handler
   const handleRegister = () => {
@@ -105,6 +113,15 @@ const Login = () => {
     authStore.clear();
     setGoLogin(true);
   }
+
+  // User type handler
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -191,7 +208,23 @@ const Login = () => {
           fullWidth={true}
           required={true}
         />
+        {/* <InputLabel id="demo-controlled-open-select-label"></InputLabel> */}
+        <Select
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={userType}
+          onChange={handleTypeChange}
+          fullWidth={true}
+          required={true}
+          className={classes.input}
+        >
+          <MenuItem value={'Client'}>Client</MenuItem>
+          <MenuItem value={'Producer'}>Producer</MenuItem>
+          <MenuItem value={'Organizor'}>Organizor</MenuItem>
+        </Select>
         <Button
+          className={classes.submitButton}
           variant="contained"
           color="primary"
           disabled={loading || disabled}
@@ -224,6 +257,9 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 25,
       },
     },
+  },
+  submitButton: {
+    margin: '0 33%',
   },
 }));
 
