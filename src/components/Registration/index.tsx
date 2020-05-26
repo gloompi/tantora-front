@@ -32,7 +32,7 @@ const CreateUserMutation = gql`
       phone: $phone
       dateOfBirth: $dateOfBirth
     ) {
-      status
+      userId
     }
   }
 `;
@@ -101,7 +101,7 @@ const Login = () => {
     }
   };
 
-  if (called && data?.createUser.status === 'ok' && !goLogin) {
+  if (called && data?.createUser.userId !== '' && !goLogin) {
     authStore.clear();
     setGoLogin(true);
   }
