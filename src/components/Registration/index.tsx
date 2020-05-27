@@ -8,12 +8,11 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 import useStore from 'hooks/useStore';
-import { CreateUserResponse } from 'generated/graphql';
+import { CreateUserResponse, AddToProducerResponse, AddToAdminResponse } from 'generated/graphql';
 import Loading from 'components/@common/Loading';
 
 const CreateUserMutation = gql`
@@ -39,6 +38,28 @@ const CreateUserMutation = gql`
     }
   }
 `;
+const AddToAdminsMutation = gql`
+  mutation(
+    $userId: string
+  ) {
+    addToAdmins(
+      userId: $userId
+    ) {
+      userId
+    }
+  }
+`;
+const AddToProducersMutation = gql`
+  mutation(
+    $userId: string
+  ) {
+    addToProducers(
+      userId: $userId
+    )
+  }
+`;
+
+
 
 const Login = () => {
   const [userName, setUsername] = useState('');
@@ -50,9 +71,10 @@ const Login = () => {
   const [dateOB, setDateOB] = useState('');
   const [goLogin, setGoLogin] = useState(false);
   const { authStore } = useStore();
-  const [userType, setUserType] = useState('Client');
+  const [userType, setUserType] = useState('client');
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState('')
 
   const disabled =
     isEmpty(userName) ||
@@ -73,6 +95,22 @@ const Login = () => {
       lastName,
       phone,
       dateOfBirth: dateOB,
+    },
+  });
+
+  const [addToAdmin] = useMutation<{
+    addToAdmins: AddToAdminResponse;
+  }>(AddToAdminsMutation, {
+    variables: {
+      userId,
+    },
+  });
+
+  const [addToProducer] = useMutation<{
+    addToProducers: AddToProducerResponse;
+  }>(AddToProducersMutation, {
+    variables: {
+       userId,
     },
   });
 
@@ -98,22 +136,18 @@ const Login = () => {
   const handleDateOBChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setDateOB(e.target.value);
   };
-  const handleTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setUserType(event.target.value as string);
+  const handleTypeChange = (event: React.ChangeEvent<{ value: 'client' }>) => {
+    setUserType(event.target.value);
   };
   
   // register handler
   const handleRegister = async () => {
     if (!disabled) {
-      if (userType === 'Client') {
-        const userId = await register();
-        console.log(userId + 'Client')
-      } else if (userType === 'Producer') {
-        const userId = await register();
-        console.log(userId+ 'Producer')
-      } else if (userType === 'Organizer') {
-        const userId = await register();
-        console.log(userId+ 'Organizer')
+      setUserId(await register());
+      if (userType === 'producer') {
+        addToProducer(data?.createUser.userId)
+      } else if (userType === 'organizer') {
+        addToAdmin(data?.createUser.userId)
       }
     }
   };
@@ -217,21 +251,22 @@ const Login = () => {
           fullWidth={true}
           required={true}
         />
-        {/* <InputLabel id="demo-controlled-open-select-label"></InputLabel> */}
-        <Select
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={userType}
-          onChange={handleTypeChange}
-          fullWidth={true}
-          required={true}
-          className={classes.input}
-        >
-          <MenuItem value={'Client'}>Client</MenuItem>
-          <MenuItem value={'Producer'}>Producer</MenuItem>
-          <MenuItem value={'Organizor'}>Organizor</MenuItem>
-        </Select>
+        <div className={classes.selectContainer}>
+          <Select
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            value={userType}
+            onChange={handleTypeChange}
+            fullWidth={true}
+            required={true}
+            className={classes.input}
+          >
+            <MenuItem value={'client'}>Client</MenuItem>
+            <MenuItem value={'producer'}>Producer</MenuItem>
+            <MenuItem value={'organizor'}>Organizor</MenuItem>
+          </Select>
+        </div>
         <Button
           className={classes.submitButton}
           variant="contained"
@@ -270,6 +305,9 @@ const useStyles = makeStyles((theme) => ({
   submitButton: {
     margin: '0 33%',
   },
+  selectContainer: {
+    alignItems: 'center'
+  }
 }));
 
 export default Login;
