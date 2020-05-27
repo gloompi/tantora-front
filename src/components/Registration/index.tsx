@@ -55,7 +55,9 @@ const AddToProducersMutation = gql`
   ) {
     addToProducers(
       userId: $userId
-    )
+    ) {
+      userId
+    }
   }
 `;
 
@@ -98,7 +100,7 @@ const Login = () => {
     },
   });
 
-  const [addToAdmin] = useMutation<{
+  const [addToAdmin, addToAdminPayload] = useMutation<{
     addToAdmins: AddToAdminResponse;
   }>(AddToAdminsMutation, {
     variables: {
@@ -106,7 +108,7 @@ const Login = () => {
     },
   });
 
-  const [addToProducer] = useMutation<{
+  const [addToProducer, addToProducerPlayload] = useMutation<{
     addToProducers: AddToProducerResponse;
   }>(AddToProducersMutation, {
     variables: {
@@ -136,7 +138,7 @@ const Login = () => {
   const handleDateOBChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setDateOB(e.target.value);
   };
-  const handleTypeChange = (event: React.ChangeEvent<{ value: 'client' }>) => {
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setUserType(event.target.value);
   };
   
@@ -301,9 +303,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 25,
       },
     },
-  },
-  submitButton: {
-    margin: '0 33%',
   },
   selectContainer: {
     alignItems: 'center'
