@@ -103,13 +103,21 @@ const Login = () => {
   };
 
   // register handler
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!disabled) {
-      register();
+      if (userType === 'Client') {
+        const userId = await register();
+        console.log(userId + 'Client')
+      } else if (userType === 'Producer') {
+        const userId = await register();
+        console.log(userId+ 'Producer')
+      } else if (userType === 'Organizer') {
+        const userId = await register();
+        console.log(userId+ 'Organizer')
+      }
     }
   };
-
-  if (called && data?.createUser.status === 'ok' && !goLogin) {
+  if (called && data?.createUser.userId !== '' && !goLogin) {
     authStore.clear();
     setGoLogin(true);
   }

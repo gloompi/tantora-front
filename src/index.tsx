@@ -6,9 +6,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   // tslint:disable-next-line: jsx-wrap-multiline
-  <React.StrictMode>
+  <React.Fragment>
     <App />
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById('root')
 );
 

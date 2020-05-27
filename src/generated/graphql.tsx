@@ -89,6 +89,7 @@ export type RefreshTokenResponse = {
 export type CreateUserResponse = {
    __typename?: 'CreateUserResponse';
   status?: Maybe<Scalars['String']>;
+  
 };
 
 export type Exhibition = {
