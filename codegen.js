@@ -1,8 +1,7 @@
 module.exports = {
   schema: [
-    'http://localhost:9999/graphql',
     {
-      'http://localhost:9999/graphql/private': {
+      'http://localhost:9999/graphql': {
         headers: {
           Authorization: 'Bearer ' + process.env.REACT_APP_AUTH_TOKEN,
         },

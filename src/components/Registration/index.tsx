@@ -35,7 +35,7 @@ const CreateUserMutation = gql`
       phone: $phone
       dateOfBirth: $dateOfBirth
     ) {
-      status
+      userId
     }
   }
 `;
@@ -101,7 +101,7 @@ const Login = () => {
   const handleTypeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setUserType(event.target.value as string);
   };
-
+  
   // register handler
   const handleRegister = async () => {
     if (!disabled) {
@@ -117,6 +117,7 @@ const Login = () => {
       }
     }
   };
+
   if (called && data?.createUser.userId !== '' && !goLogin) {
     authStore.clear();
     setGoLogin(true);
