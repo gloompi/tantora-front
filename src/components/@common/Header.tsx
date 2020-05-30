@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from 'react-responsive';
+import { Waypoint } from 'react-waypoint';
+import cls from 'classnames';
 import hexToRgb from 'hex-rgb';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,6 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { LogoutResponse } from 'generated/graphql';
 import useStore from 'hooks/useStore';
 import Menu from 'components/@common/Menu';
+import MenuMobile from 'components/@common/MenuMobile';
 
 const LogoutQuery = gql`
   query($token: String!) {
@@ -27,6 +30,7 @@ const LogoutQuery = gql`
 
 const Header = observer(() => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState(false);
   const { authStore } = useStore();
   const client = useApolloClient();
   const classes = useStyles();
@@ -51,54 +55,75 @@ const Header = observer(() => {
   const handleToggleMenu = (open: boolean) => () => {
     setMenuOpen(open);
   };
+  const handleEnter = () => {
+    setActive(false);
+  };
+  const handleLeave = () => {
+    setActive(true);
+  };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.headerBar}>
-        {isTablet && (
-          <Menu open={menuOpen} handleClose={handleToggleMenu(false)} />
-        )}
-        <Toolbar className={classes.headerToolbar}>
+    <>
+      <Waypoint
+        bottomOffset={-300}
+        onEnter={handleEnter}
+        onLeave={handleLeave}
+      />
+      <div className={classes.root}>
+        <AppBar
+          position="static"
+          className={cls(classes.headerBar, { active })}
+        >
+          <div className={`${classes.headerBg} bg`} />
           {isTablet && (
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="default"
-              aria-label="menu"
-              onClick={handleToggleMenu(true)}
-            >
-              <MenuIcon />
-            </IconButton>
+            <MenuMobile open={menuOpen} handleClose={handleToggleMenu(false)} />
           )}
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Typography variant="h6" className={classes.homeBtn}>
-              Tantora
-            </Typography>
-          </Link>
-          <div className={classes.loginWrapper}>
-            {authStore.isAuth ? (
-              <Button className={classes.login} onClick={handleLogout}>
-                Logout
-              </Button>
-            ) : (
-              <>
-                <Link to="/register" style={{ textDecoration: 'none' }}>
-                  <Button className={classes.login}>SignUp</Button>
-                </Link>
-                <Link to="/login" style={{ textDecoration: 'none' }}>
-                  <Button className={classes.login}>Login</Button>
-                </Link>
-              </>
+          <Toolbar className={classes.headerToolbar}>
+            {isTablet && (
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="default"
+                aria-label="menu"
+                onClick={handleToggleMenu(true)}
+              >
+                <MenuIcon className={classes.whiteBtn} />
+              </IconButton>
             )}
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Button>
+                <Typography variant="h6" className={classes.whiteBtn}>
+                  Tantora
+                </Typography>
+              </Button>
+            </Link>
+            {!isTablet && <Menu />}
+            <div className={classes.loginWrapper}>
+              {authStore.isAuth ? (
+                <Button className={classes.whiteBtn} onClick={handleLogout}>
+                  Logout
+                </Button>
+              ) : (
+                <>
+                  <Link to="/register" style={{ textDecoration: 'none' }}>
+                    <Button className={classes.whiteBtn}>SignUp</Button>
+                  </Link>
+                  <Link to="/login" style={{ textDecoration: 'none' }}>
+                    <Button className={classes.whiteBtn}>Login</Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </Toolbar>
+        </AppBar>
+      </div>
+    </>
   );
 });
 
 const useStyles = makeStyles((theme) => {
   const { red, green, blue } = hexToRgb(theme.palette.primary.main);
+  const black = hexToRgb(theme.palette.common.black);
 
   return {
     root: {
@@ -109,7 +134,32 @@ const useStyles = makeStyles((theme) => {
       zIndex: 250,
     },
     headerBar: {
-      background: `linear-gradient(90deg, rgba(${red}, ${green}, ${blue}, 0.5) 0%, rgba(${blue}, ${green}, ${red}, 0.5) 96%)`,
+      position: 'relative',
+      backgroundColor: 'transparent',
+
+      '&.active': {
+        '& > .bg': { opacity: 1 },
+      },
+
+      '&:before': {
+        content: `""`,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: `rgba(${black.red}, ${black.green}, ${black.blue}, 0.3)`,
+      },
+    },
+    headerBg: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      width: '100%',
+      height: '100%',
+      background: `linear-gradient(90deg, rgb(${red}, ${green}, ${blue}) 0%, rgb(${blue}, ${green}, ${red}) 96%)`,
+      opacity: 0,
+      transition: '0.3s',
     },
     headerToolbar: {
       display: 'flex',
@@ -119,15 +169,12 @@ const useStyles = makeStyles((theme) => {
     menuButton: {
       marginRight: theme.spacing(2),
     },
-    homeBtn: {
+    whiteBtn: {
       color: theme.palette.common.white,
     },
     loginWrapper: {
       display: 'flex',
       alignItems: 'center',
-    },
-    login: {
-      color: theme.palette.common.white,
     },
   };
 });

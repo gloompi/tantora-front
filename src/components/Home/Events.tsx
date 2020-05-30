@@ -3,6 +3,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
 import { Exhibition } from 'generated/graphql';
@@ -27,10 +28,6 @@ const Events: FC = () => {
   const classes = useStyles();
   const { data, loading, error } = useQuery<IResponse>(GET_EXHIBITONS);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (error) {
     return (
       <Typography color="error">
@@ -40,50 +37,51 @@ const Events: FC = () => {
   }
 
   return (
-    <section className={classes.wrapper}>
+    <Container maxWidth="lg" className={classes.wrapper}>
       <Typography variant="h4" className={classes.title}>
         Up coming online exhibitions
       </Typography>
+      {loading && <Loading />}
       <div className={classes.container}>
-        {data!.exhibitions.map(
-          ({ exhibitionId, name, description, startDate }) => {
-            const date = new Date(startDate!);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
+        {!loading &&
+          data!.exhibitions.map(
+            ({ exhibitionId, name, description, startDate }) => {
+              const date = new Date(startDate!);
+              const year = date.getFullYear();
+              const month = date.getMonth() + 1;
+              const day = date.getDate();
 
-            return (
-              <div className={classes.event} key={exhibitionId!}>
-                <Typography variant="h6" color="textPrimary">
-                  {name}
-                </Typography>
-                <Typography className={classes.text} variant="subtitle2">
-                  {description!.length < 150
-                    ? description
-                    : description!.slice(0, 250) + '·.·.·.'}
-                </Typography>
-                <div className={classes.boxForDateBtn}>
-                  <Typography variant="body2">
-                    {`start date: ${year}/${month}/${day}`}
+              return (
+                <div className={classes.event} key={exhibitionId!}>
+                  <Typography variant="h6" color="textPrimary">
+                    {name}
                   </Typography>
-                  <Button color="secondary" variant="contained">
-                    Join
-                  </Button>
+                  <Typography className={classes.text} variant="subtitle2">
+                    {description!.length < 150
+                      ? description
+                      : description!.slice(0, 250) + ' ...'}
+                  </Typography>
+                  <div className={classes.boxForDateBtn}>
+                    <Typography variant="body2">
+                      {`start date: ${year}/${month}/${day}`}
+                    </Typography>
+                    <Button color="secondary" variant="contained">
+                      Join
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            );
-          }
-        )}
+              );
+            }
+          )}
       </div>
-    </section>
+    </Container>
   );
 };
 
 const useStyles = makeStyles({
   wrapper: {
     width: '100%',
-    maxWidth: 1170,
-    margin: '0 auto 150px',
+    marginBottom: 150,
   },
   title: {
     textAlign: 'center',

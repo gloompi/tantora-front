@@ -3,6 +3,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import loadable from '@loadable/component';
 
 import 'normalize.css';
@@ -28,6 +29,9 @@ const LoadableAdmins = loadable(() => import('components/Admin'), {
 const LoadableRegistration = loadable(() => import('components/Registration'), {
   fallback: <Loading />,
 });
+const LoadableMessages = loadable(() => import('components/Messages'), {
+  fallback: <Loading />,
+});
 
 const client = new ApolloClient({
   uri: env.backendUrl,
@@ -42,31 +46,46 @@ const client = new ApolloClient({
   },
 });
 
-const App: FC = () => (
-  <ApolloProvider client={client}>
-    <StoreProvider>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route path="/" exact={true}>
-              <LoadableHome />
-            </Route>
-            <Route path="/admins">
-              <LoadableAdmins />
-            </Route>
-            <Route path="/login">
-              <LoadableLogin />
-            </Route>
-            <Route path="/register">
-              <LoadableRegistration />
-            </Route>
-          </Switch>
-          <Footer />
-        </Router>
-      </ThemeProvider>
-    </StoreProvider>
-  </ApolloProvider>
-);
+const App: FC = () => {
+  const classes = useStyles();
+
+  return (
+    <ApolloProvider client={client}>
+      <StoreProvider>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Header />
+            <main className={classes.main}>
+              <Switch>
+                <Route path="/" exact={true}>
+                  <LoadableHome />
+                </Route>
+                <Route path="/admins">
+                  <LoadableAdmins />
+                </Route>
+                <Route path="/login">
+                  <LoadableLogin />
+                </Route>
+                <Route path="/register">
+                  <LoadableRegistration />
+                </Route>
+                <Route path="/messages">
+                  <LoadableMessages />
+                </Route>
+              </Switch>
+            </main>
+            <Footer />
+          </Router>
+        </ThemeProvider>
+      </StoreProvider>
+    </ApolloProvider>
+  );
+};
+
+const useStyles = makeStyles({
+  main: {
+    minHeight: 'calc(100vh - 70px)',
+  },
+});
 
 export default App;

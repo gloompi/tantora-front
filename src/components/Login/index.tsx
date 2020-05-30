@@ -57,7 +57,7 @@ const Login = () => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.container}>
+    <Container className={classes.container}>
       <form className={classes.form}>
         {!loading ? (
           <Typography className={classes.title} variant="h4" color="secondary">
@@ -108,8 +108,17 @@ const Login = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  container: theme.mixins.container,
-  form: theme.mixins.form,
+  container: {
+    ...theme.mixins.container,
+    width: '100%',
+    maxWidth: '100%',
+    background: `url(${require('assets/images/login-bg.jpg')}) center no-repeat`,
+    backgroundSize: 'cover',
+  },
+  form: {
+    ...theme.mixins.form,
+    backgroundColor: theme.palette.common.white,
+  },
   title: {
     marginBottom: 25,
   },

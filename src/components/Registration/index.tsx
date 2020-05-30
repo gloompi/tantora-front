@@ -87,14 +87,6 @@ const Register = () => {
   const { authStore } = useStore();
   const classes = useStyles();
 
-  const disabled =
-    isEmpty(userName) ||
-    isEmpty(password) ||
-    isEmpty(email) ||
-    isEmpty(firstName) ||
-    isEmpty(lastName) ||
-    isEmpty(dateOB);
-
   const [register, registerPayload] = useMutation<{
     createUser: CreateUserResponse;
   }>(CreateUserMutation, {
@@ -182,6 +174,17 @@ const Register = () => {
     }
   };
 
+  const disabled =
+    isEmpty(userName) ||
+    isEmpty(password) ||
+    isEmpty(email) ||
+    isEmpty(firstName) ||
+    isEmpty(lastName) ||
+    isEmpty(dateOB) ||
+    registerPayload.loading ||
+    adminsPayload.loading ||
+    producersPayload.loading;
+
   // User type handler
   const handleClose = () => {
     setOpen(false);
@@ -212,7 +215,7 @@ const Register = () => {
   }
 
   return (
-    <Container maxWidth="lg" className={classes.container}>
+    <Container className={classes.container}>
       <form className={classes.form}>
         {!registerPayload.loading ? (
           <Typography className={classes.title} variant="h4" color="secondary">
@@ -326,8 +329,17 @@ const Register = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  container: theme.mixins.container,
-  form: theme.mixins.form,
+  container: {
+    ...theme.mixins.container,
+    width: '100%',
+    maxWidth: '100%',
+    background: `url(${require('assets/images/register-bg.jpg')}) center no-repeat`,
+    backgroundSize: 'cover',
+  },
+  form: {
+    ...theme.mixins.form,
+    backgroundColor: theme.palette.common.white,
+  },
   title: {
     marginBottom: 25,
   },
