@@ -2,12 +2,13 @@ import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 
 const Search: FC = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.searchField}>
+    <Container maxWidth="lg" className={classes.searchField}>
       <label htmlFor="text" className={classes.label}>
         Keep in touch with all online exebitions
       </label>
@@ -19,7 +20,7 @@ const Search: FC = () => {
       <Button color="primary" variant="contained" className={classes.button}>
         Search
       </Button>
-    </div>
+    </Container>
   );
 };
 
@@ -27,8 +28,7 @@ const useStyles = makeStyles({
   searchField: {
     position: 'relative',
     width: '100%',
-    maxWidth: 1170,
-    margin: '0 auto 150px',
+    marginBottom: 150,
   },
   label: {
     display: 'flex',

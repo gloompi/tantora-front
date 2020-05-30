@@ -22,7 +22,7 @@ const MainScreen = () => {
 const useStyles = (props: IStyleProps) =>
   makeStyles((theme) => {
     const black = hexToRgb(theme.palette.common.black);
-    const primary = hexToRgb(theme.palette.primary.main);
+    const primary = hexToRgb(theme.palette.secondary.main);
 
     return {
       wrapper: {
@@ -32,7 +32,8 @@ const useStyles = (props: IStyleProps) =>
         justifyContent: 'center',
         height: '90vh',
         width: '100%',
-        background: `url(${props.bgSrc})`,
+        background: `url(${props.bgSrc}) center no-repeat`,
+        backgroundSize: 'cover',
         backgroundColor: theme.palette.secondary.main,
         padding: 0,
         marginBottom: 150,
@@ -45,7 +46,7 @@ const useStyles = (props: IStyleProps) =>
           left: 0,
           top: 0,
           // tslint:disable-next-line: prettier
-          background: `linear-gradient(90deg, rgba(${black.red}, ${black.green}, ${black.blue}, 0.5) 0%, rgba(${primary.red}, ${primary.green}, ${primary.blue}, 0.3) 96%)`,
+          background: `linear-gradient(90deg, rgba(${black.red}, ${black.green}, ${black.blue}, 0.5) 0%, rgba(${primary.red}, ${primary.green}, ${primary.blue}, 0.7) 96%)`,
         },
       },
       title: {
