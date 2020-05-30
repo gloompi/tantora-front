@@ -1,16 +1,23 @@
-import React, { useState, ChangeEventHandler } from 'react';
+import React, { useState, useEffect, ChangeEventHandler } from 'react';
 import { Redirect } from 'react-router-dom';
-import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
+import { gql } from 'apollo-boost';
+import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import useStore from 'hooks/useStore';
-import { CreateUserResponse } from 'generated/graphql';
+import {
+  CreateUserResponse,
+  AddToAdminResponse,
+  AddToProducerResponse,
+} from 'generated/graphql';
 import Loading from 'components/@common/Loading';
 
 const CreateUserMutation = gql`
@@ -32,12 +39,43 @@ const CreateUserMutation = gql`
       phone: $phone
       dateOfBirth: $dateOfBirth
     ) {
-      userId
+      token {
+        accessToken
+      }
+      user {
+        userId
+      }
     }
   }
 `;
 
-const Login = () => {
+const AddToAdminsMutation = gql`
+  mutation($userId: String!) {
+    addToAdmins(userId: $userId) {
+      status
+    }
+  }
+`;
+
+const AddToProducerMutation = gql`
+  mutation($userId: String!) {
+    addToProducer(userId: $userId) {
+      status
+    }
+  }
+`;
+
+const ROLE_ENUM = Object.freeze({
+  CLIENT: 'client',
+  PRODUCER: 'producer',
+  ORGANIZER: 'organizer',
+});
+
+const Register = () => {
+  const [open, setOpen] = useState(false);
+  const [userType, setUserType] = useState(ROLE_ENUM.CLIENT);
+
+  // form fields
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -45,7 +83,7 @@ const Login = () => {
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [dateOB, setDateOB] = useState('');
-  const [goLogin, setGoLogin] = useState(false);
+
   const { authStore } = useStore();
   const classes = useStyles();
 
@@ -57,7 +95,7 @@ const Login = () => {
     isEmpty(lastName) ||
     isEmpty(dateOB);
 
-  const [register, { loading, error, data, called }] = useMutation<{
+  const [register, registerPayload] = useMutation<{
     createUser: CreateUserResponse;
   }>(CreateUserMutation, {
     variables: {
@@ -70,6 +108,47 @@ const Login = () => {
       dateOfBirth: dateOB,
     },
   });
+
+  const userId = get(registerPayload, 'data.createUser.user.userId', '');
+
+  const [addToAdmins, adminsPayload] = useMutation<{
+    addToAdmins: AddToAdminResponse;
+  }>(AddToAdminsMutation, {
+    variables: { userId },
+  });
+
+  const [addToProducers, producersPayload] = useMutation<{
+    addToProducer: AddToProducerResponse;
+  }>(AddToProducerMutation, {
+    variables: { userId },
+  });
+
+  useEffect(() => {
+    if (
+      registerPayload.called &&
+      registerPayload.loading === false &&
+      userId !== ''
+    ) {
+      authStore.setAuthToken(
+        get(registerPayload, 'data.createUser.token.accessToken', '')
+      );
+
+      if (userType === ROLE_ENUM.PRODUCER) {
+        addToProducers(userId);
+      } else if (userType === ROLE_ENUM.ORGANIZER) {
+        addToAdmins(userId);
+      }
+    }
+  }, [
+    userId,
+    userType,
+    authStore,
+    addToAdmins,
+    addToProducers,
+    registerPayload,
+    registerPayload.called,
+    registerPayload.loading,
+  ]);
 
   // input handlers
   const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -94,6 +173,23 @@ const Login = () => {
     setDateOB(e.target.value);
   };
 
+  const handleTypeChange: ChangeEventHandler<{
+    name?: string;
+    value: unknown;
+  }> = (e) => {
+    if (typeof e.target.value === 'string') {
+      setUserType(e.target.value);
+    }
+  };
+
+  // User type handler
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   // register handler
   const handleRegister = () => {
     if (!disabled) {
@@ -101,15 +197,24 @@ const Login = () => {
     }
   };
 
-  if (called && data?.createUser.userId !== '' && !goLogin) {
-    authStore.clear();
-    setGoLogin(true);
+  if (authStore.isAuth) {
+    if (
+      userType === ROLE_ENUM.CLIENT ||
+      (userType === ROLE_ENUM.PRODUCER &&
+        producersPayload.called &&
+        !producersPayload.loading) ||
+      (userType === ROLE_ENUM.ORGANIZER &&
+        adminsPayload.called &&
+        !adminsPayload.loading)
+    ) {
+      return <Redirect to="/" />;
+    }
   }
 
   return (
     <Container maxWidth="lg" className={classes.container}>
       <form className={classes.form}>
-        {!loading ? (
+        {!registerPayload.loading ? (
           <Typography className={classes.title} variant="h4" color="secondary">
             Create New User
           </Typography>
@@ -119,10 +224,10 @@ const Login = () => {
         <TextField
           label="Username"
           value={userName}
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handleUsernameChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
         />
@@ -130,10 +235,10 @@ const Login = () => {
           type="password"
           label="Password"
           value={password}
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handlePasswordChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
         />
@@ -141,66 +246,81 @@ const Login = () => {
           label="Email"
           type="email"
           value={email}
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handleEmailChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
         />
         <TextField
           label="First name"
           value={firstName}
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handleFirstNameChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
         />
         <TextField
           label="Last name"
           value={lastName}
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handleLastNameChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
         />
         <TextField
           label="Phone"
           value={phone}
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handlePhoneChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           fullWidth={true}
         />
         <TextField
           label="Date of birth"
           value={dateOB}
           type="date"
-          error={Boolean(error)}
+          error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handleDateOBChange}
-          disabled={loading}
+          disabled={registerPayload.loading}
           InputLabelProps={{
             shrink: true,
           }}
           fullWidth={true}
           required={true}
         />
+        <div>
+          <Select
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            value={userType}
+            onChange={handleTypeChange}
+            fullWidth={true}
+            required={true}
+            className={classes.input}
+          >
+            <MenuItem value={ROLE_ENUM.CLIENT}>Client</MenuItem>
+            <MenuItem value={ROLE_ENUM.PRODUCER}>Producer</MenuItem>
+            <MenuItem value={ROLE_ENUM.ORGANIZER}>Organizor</MenuItem>
+          </Select>
+        </div>
         <Button
           variant="contained"
           color="primary"
-          disabled={loading || disabled}
+          disabled={registerPayload.loading || disabled}
           onClick={handleRegister}
         >
           Register
         </Button>
       </form>
-      {goLogin && <Redirect to="/login" />}
     </Container>
   );
 };
@@ -214,17 +334,6 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginBottom: 25,
   },
-  buttonsWrapper: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    width: '100%',
-
-    '& > button': {
-      '&:first-child': {
-        marginRight: 25,
-      },
-    },
-  },
 }));
 
-export default Login;
+export default Register;
