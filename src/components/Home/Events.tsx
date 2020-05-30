@@ -72,7 +72,7 @@ const Events: FC = () => {
                 </div>
               );
             }
-        )}
+          )}
       </div>
     </Container>
   );

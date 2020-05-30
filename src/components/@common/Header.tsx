@@ -149,7 +149,7 @@ const useStyles = makeStyles((theme) => {
         width: '100%',
         height: '100%',
         backgroundColor: `rgba(${black.red}, ${black.green}, ${black.blue}, 0.3)`,
-      }
+      },
     },
     headerBg: {
       position: 'absolute',

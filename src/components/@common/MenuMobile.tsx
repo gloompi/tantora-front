@@ -21,7 +21,7 @@ export const NAV_ITEMS = [
   { label: 'About', link: '/about', icon: <AboutIcon /> },
   { label: 'Exhibitions', link: '/exhibitions', icon: <ExhibitionsIcon /> },
   { label: 'Admins', link: '/admins', icon: <AdminsIcon /> },
-  { label: 'Messages', link: '/messages', icon: <MessagesIcon /> }
+  { label: 'Messages', link: '/messages', icon: <MessagesIcon /> },
 ];
 
 const Menu: FC<IProps> = ({ open, handleClose }) => {
