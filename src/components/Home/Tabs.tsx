@@ -22,9 +22,9 @@ const MyTabs: FC = () => {
           className={classes.tabs}
           textColor="primary"
         >
-          <Tab label="Visitors" />
-          <Tab label="Exhibitions" />
-          <Tab label="Organizations" />
+          <Tab label="Visitors" className={classes.tab}/>
+          <Tab label="Exhibitions" className={classes.tab}/>
+          <Tab label="Organizations" className={classes.tab}/>
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -43,7 +43,19 @@ const MyTabs: FC = () => {
 const useStyles = makeStyles((theme) => ({
   tabs: {
     backgroundColor: theme.palette.background.paper,
+    justifyContent: 'space-between',
+    margin: 'auto',
+    width: '100%'
   },
+  tab: {
+    width: '30%',
+    borderRadius: 25,
+    fontWeight: 'bolder',
+    backgroundColor: '#001DBE',
+    color: 'white',
+    height: 56,
+    margin: '0 6%'
+  }
 }));
 
 export default MyTabs;

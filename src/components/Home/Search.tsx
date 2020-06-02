@@ -17,7 +17,7 @@ const Search: FC = () => {
         className={classes.input}
         placeholder="What are you looking for..."
       />
-      <Button color="primary" variant="contained" className={classes.button}>
+      <Button variant="contained" className={classes.button}>
         Search
       </Button>
     </Container>
@@ -27,8 +27,9 @@ const Search: FC = () => {
 const useStyles = makeStyles({
   searchField: {
     position: 'relative',
-    width: '100%',
+    width: '60%',
     marginBottom: 150,
+    alignItems: 'center',
   },
   label: {
     display: 'flex',
@@ -42,14 +43,20 @@ const useStyles = makeStyles({
     padding: '25px 15px',
     borderRadius: 4,
     zIndex: 100,
+    
   },
   button: {
     position: 'absolute',
     justifyContent: 'right',
-    right: 0,
+    right: 20,
     marginTop: 1,
     marginRight: 1,
     zIndex: 150,
+    borderRadius: 25,
+    height: 46,
+    fontWeight: 'bolder',
+    backgroundColor: '#001DBE',
+    color: 'white',
   },
 });
 

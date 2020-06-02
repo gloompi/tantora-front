@@ -11,7 +11,7 @@ import Loading from 'components/@common/Loading';
 
 const GET_EXHIBITONS = gql`
   query {
-    exhibitions(limit: 6) {
+    exhibitions(limit: 4) {
       exhibitionId
       name
       description
@@ -53,7 +53,7 @@ const Events: FC = () => {
 
               return (
                 <div className={classes.event} key={exhibitionId!}>
-                  <Typography variant="h6" color="textPrimary">
+                  <Typography variant="h6"  className={classes.eventTitle}>
                     {name}
                   </Typography>
                   <Typography className={classes.text} variant="subtitle2">
@@ -62,10 +62,10 @@ const Events: FC = () => {
                       : description!.slice(0, 250) + ' ...'}
                   </Typography>
                   <div className={classes.boxForDateBtn}>
-                    <Typography variant="body2">
-                      {`start date: ${year}/${month}/${day}`}
+                    <Typography variant="body2" className={classes.data}>
+                      {`Date: ${year}/${month}/${day}`}
                     </Typography>
-                    <Button color="secondary" variant="contained">
+                    <Button className={classes.joinBtn} variant="contained">
                       Join
                     </Button>
                   </div>
@@ -96,18 +96,43 @@ const useStyles = makeStyles({
   event: {
     textAlign: 'left',
     width: '49%',
+    height: '300',
     padding: '15px 20px',
     marginBottom: 25,
     backgroundColor: 'rgb(147, 147, 148)',
     borderRadius: 5,
+    backgroundImage:`url(https://files.slack.com/files-pri/T013V5HN35F-F0141LZD5EJ/aliexpress-singles-d.jpg)`,
+    backgroundSize: 'cover',
+  },
+  eventTitle: {
+    fontFamily: 'Roboto',
+    color: 'white',
+    fontWeight: 'bolder',
   },
   text: {
-    height: 80,
+    height: 150,
+    fontSize: 18,
+    fontFamily: 'Roboto',
+    color: 'white',
+    fontWeight: 'bolder',
   },
   boxForDateBtn: {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
+  },
+  data: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  joinBtn: {
+    fontWeight: 'bolder',
+    backgroundColor: '#001DBE',
+    color: 'white',
+    borderRadius: 25,
+    width: 97,
+    height: 47,
   },
 });
 

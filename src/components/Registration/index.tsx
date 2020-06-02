@@ -78,6 +78,7 @@ const Register = () => {
   // form fields
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -149,6 +150,9 @@ const Register = () => {
   const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPassword(e.target.value);
   };
+  const handleConfirmPasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setConfirmPassword(e.target.value);
+  };
   const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEmail(e.target.value);
   };
@@ -195,8 +199,14 @@ const Register = () => {
 
   // register handler
   const handleRegister = () => {
-    if (!disabled) {
-      register();
+    if (password === confirmPassword) {
+      if (!disabled) {
+        register();
+      }
+    } else {
+      alert("Please emter your Password and Confirm it with the same value")
+      setPassword('')
+      setConfirmPassword('')
     }
   };
 
@@ -241,6 +251,16 @@ const Register = () => {
           error={Boolean(registerPayload.error)}
           className={classes.input}
           onChange={handlePasswordChange}
+          disabled={registerPayload.loading}
+          fullWidth={true}
+          required={true}
+        />
+        <TextField
+          type="password"
+          label="Confirm Password"
+          value={confirmPassword}
+          className={classes.input}
+          onChange={handleConfirmPasswordChange}
           disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
