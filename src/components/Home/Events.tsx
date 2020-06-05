@@ -53,7 +53,7 @@ const Events: FC = () => {
 
               return (
                 <div className={classes.event} key={exhibitionId!}>
-                  <Typography variant="h6" color="textPrimary">
+                  <Typography variant="h6" color="inherit">
                     {name}
                   </Typography>
                   <Typography className={classes.text} variant="subtitle2">
@@ -78,7 +78,7 @@ const Events: FC = () => {
   );
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   wrapper: {
     width: '100%',
     marginBottom: 150,
@@ -94,6 +94,7 @@ const useStyles = makeStyles({
     width: `100%`,
   },
   event: {
+    color: theme.palette.common.white,
     textAlign: 'left',
     width: '49%',
     padding: '15px 20px',
@@ -102,13 +103,15 @@ const useStyles = makeStyles({
     borderRadius: 5,
   },
   text: {
-    height: 80,
+    color: theme.palette.common.white,
+    minHeight: 80,
+    marginBottom: 25,
   },
   boxForDateBtn: {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
   },
-});
+}));
 
 export default Events;
