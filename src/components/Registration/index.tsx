@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEventHandler } from 'react';
+import React, { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
@@ -150,7 +150,9 @@ const Register = () => {
   const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPassword(e.target.value);
   };
-  const handleConfirmPasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleConfirmPasswordChange: ChangeEventHandler<HTMLInputElement> = (
+    e
+  ) => {
     setConfirmPassword(e.target.value);
   };
   const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -198,15 +200,15 @@ const Register = () => {
   };
 
   // register handler
-  const handleRegister = () => {
+  const handleRegister: MouseEventHandler = ()=> {
     if (password === confirmPassword) {
       if (!disabled) {
         register();
       }
     } else {
-      alert("Please emter your Password and Confirm it with the same value")
-      setPassword('')
-      setConfirmPassword('')
+      alert('Please emter your Password and Confirm it with the same value');
+      setPassword('');
+      setConfirmPassword('');
     }
   };
 
@@ -264,6 +266,8 @@ const Register = () => {
           disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
+          //helperText="Incorrect entry."
+          //error
         />
         <TextField
           label="Email"

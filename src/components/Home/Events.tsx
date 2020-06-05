@@ -53,7 +53,7 @@ const Events: FC = () => {
 
               return (
                 <div className={classes.event} key={exhibitionId!}>
-                  <Typography variant="h6"  className={classes.eventTitle}>
+                  <Typography variant="h6" className={classes.eventTitle}>
                     {name}
                   </Typography>
                   <Typography className={classes.text} variant="subtitle2">
@@ -101,7 +101,7 @@ const useStyles = makeStyles({
     marginBottom: 25,
     backgroundColor: 'rgb(147, 147, 148)',
     borderRadius: 5,
-    backgroundImage:`url(https://files.slack.com/files-pri/T013V5HN35F-F0141LZD5EJ/aliexpress-singles-d.jpg)`,
+    backgroundImage: `url(https://files.slack.com/files-pri/T013V5HN35F-F0141LZD5EJ/aliexpress-singles-d.jpg)`,
     backgroundSize: 'cover',
   },
   eventTitle: {

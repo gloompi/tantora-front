@@ -20,6 +20,9 @@ import Footer from 'components/@common/Footer';
 const LoadableHome = loadable(() => import('components/Home'), {
   fallback: <Loading />,
 });
+const LoadableExibitions = loadable(() => import('components/Home/Events/index'), {
+  fallback: <Loading />,
+});
 const LoadableLogin = loadable(() => import('components/Login'), {
   fallback: <Loading />,
 });
@@ -59,6 +62,9 @@ const App: FC = () => {
               <Switch>
                 <Route path="/" exact={true}>
                   <LoadableHome />
+                </Route>
+                <Route path="/exibitions">
+                  <LoadableExibitions />
                 </Route>
                 <Route path="/admins">
                   <LoadableAdmins />

@@ -24,7 +24,7 @@ const Search: FC = () => {
   );
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   searchField: {
     position: 'relative',
     width: '60%',
@@ -43,7 +43,6 @@ const useStyles = makeStyles({
     padding: '25px 15px',
     borderRadius: 4,
     zIndex: 100,
-    
   },
   button: {
     position: 'absolute',
@@ -55,9 +54,9 @@ const useStyles = makeStyles({
     borderRadius: 25,
     height: 46,
     fontWeight: 'bolder',
-    backgroundColor: '#001DBE',
-    color: 'white',
+    backgroundColor: theme.palette.common.blue,
+    color: theme.palette.primary.light
   },
-});
+}));
 
 export default Search;

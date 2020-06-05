@@ -8,6 +8,7 @@ let theme = createMuiTheme({
     secondary: blueGrey,
     common: {
       white: '#fff',
+      blue: '001DBE',
     },
   },
 });
