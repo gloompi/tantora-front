@@ -20,7 +20,7 @@ import Footer from 'components/@common/Footer';
 const LoadableHome = loadable(() => import('components/Home'), {
   fallback: <Loading />,
 });
-const LoadableExibitions = loadable(() => import('components/Home/Events'), {
+const LoadableExibitions = loadable(() => import('components/Events'), {
   fallback: <Loading />,
 });
 const LoadableLogin = loadable(() => import('components/Login'), {
