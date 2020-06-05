@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     height: 46,
     fontWeight: 'bolder',
     backgroundColor: theme.palette.common.blue,
-    color: theme.palette.primary.light
+    color: theme.palette.primary.light,
   },
 }));
 

@@ -7,3 +7,9 @@ declare module '@material-ui/core/styles/createMixins' {
     form: CSSProperties;
   }
 }
+
+declare module '@material-ui/core/styles/createPalette' {
+  interface CommonColors {
+    blue: string;
+  }
+}
