@@ -85,7 +85,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     textAlign: 'center',
-    marginBottom: 25,
+    marginBottom: 75,
+    fontSize: '2.5rem',
   },
   container: {
     display: 'flex',
@@ -128,9 +129,8 @@ const useStyles = makeStyles((theme) => ({
   },
   joinBtn: {
     fontWeight: 'bolder',
-    backgroundColor: theme.palette.common.blue,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
-    borderRadius: 25,
     width: 97,
     height: 47,
   },

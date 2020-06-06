@@ -14,20 +14,6 @@ const MyTabs: FC = () => {
 
   return (
     <div>
-<<<<<<< HEAD
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          className={classes.tabs}
-          textColor="primary"
-        >
-          <Tab label="Visitors" className={classes.tab} selected={"white"}/>
-          <Tab label="Exhibitions" className={classes.tab} />
-          <Tab label="Organizations" className={classes.tab} />
-        </Tabs>
-      </AppBar>
-=======
       <Tabs
         value={value}
         onChange={handleChange}
@@ -38,7 +24,6 @@ const MyTabs: FC = () => {
         <Tab label="Exhibitions" className={classes.tab} />
         <Tab label="Organizations" className={classes.tab} />
       </Tabs>
->>>>>>> 63c5d6aec0425ce608e207c9cea96c6e542345a3
       <TabPanel value={value} index={0}>
         Item One
       </TabPanel>
@@ -57,29 +42,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     margin: 'auto',
     width: '100%',
-<<<<<<< HEAD
-=======
 
     '& .MuiTabs-flexContainer': {
       justifyContent: 'space-between',
     },
->>>>>>> 63c5d6aec0425ce608e207c9cea96c6e542345a3
   },
- 
+
   tab: {
     width: '30%',
     fontWeight: 'bolder',
     backgroundColor: theme.palette.primary.dark,
     color: theme.palette.common.white,
     height: 56,
-<<<<<<< HEAD
-=======
     marginBottom: 8,
 
     '&.Mui-selected': {
       color: theme.palette.common.white,
     },
->>>>>>> 63c5d6aec0425ce608e207c9cea96c6e542345a3
   },
 }));
 

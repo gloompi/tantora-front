@@ -89,7 +89,8 @@ const useStyles = (props: IStyleProps) =>
     },
     title: {
       textAlign: 'center',
-      marginBottom: 25,
+      marginBottom: 50,
+      fontSize: '2.5rem',
     },
     container: {
       display: 'flex',
@@ -132,9 +133,8 @@ const useStyles = (props: IStyleProps) =>
     },
     joinBtn: {
       fontWeight: 'bolder',
-      backgroundColor: theme.palette.common.blue,
+      backgroundColor: theme.palette.primary.main,
       color: theme.palette.common.white,
-      borderRadius: 25,
       width: 97,
       height: 47,
     },

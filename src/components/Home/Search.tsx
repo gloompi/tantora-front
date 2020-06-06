@@ -35,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
   label: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 50,
     fontWeight: 'bold',
+    fontSize: 30,
   },
   input: {
     width: '100%',
