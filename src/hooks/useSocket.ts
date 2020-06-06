@@ -4,21 +4,17 @@ import env from '@config/env';
 
 export class Socket {
   private _io?: SocketIOClient.Socket;
-  public static _instance?: Socket;
+  public static _instances: Socket[] = [];
 
   get io(): SocketIOClient.Socket | undefined {
     return this._io;
   }
 
   public static getInstance = (): Socket => {
-    if (Socket._instance === undefined) {
-      const socket = new Socket();
-      Socket._instance = socket;
+    const socket = new Socket();
+    Socket._instances.push(socket);
 
-      return Socket._instance;
-    } else {
-      return Socket._instance;
-    }
+    return socket;
   };
 
   public connect = (room?: string) => {

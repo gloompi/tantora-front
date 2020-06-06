@@ -1,36 +1,73 @@
 import { observable, computed, action } from 'mobx';
+import { gql } from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
 
-import { User } from 'generated/graphql';
+import { User, RefreshTokenResponse } from 'generated/graphql';
+import { RootStore } from './rootStore';
+
+const MeQuery = gql`
+  query {
+    me {
+      userId
+      userName
+      firstName
+      lastName
+      email
+      phone
+      dateOfBirth
+      isActive
+    }
+  }
+`;
+
+const RefreshTokenMutation = gql`
+  mutation($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
+      token {
+        accessToken
+        refreshToken
+      }
+    }
+  }
+`;
+
+const LOCAL_STORAGE_ENUMS = Object.freeze({
+  AUTH_TOKEN: 'authToken',
+  REFRESH_TOKEN: 'refreshToken',
+});
 
 class AuthStore {
   @observable private _authToken: string;
   @observable private _refreshToken: string;
-  @observable private _user?: User;
+  @observable private _user: User | null = null;
 
   @computed public get isAuth(): boolean {
-    return !isEmpty(this._authToken) ? true : false;
+    return !isEmpty(this._authToken) && this.user !== null ? true : false;
   }
 
-  @computed public get user(): User | undefined {
+  @computed public get user(): User | null {
     return this._user;
   }
 
   @computed public get authToken(): string {
-    const authToken = localStorage.getItem('authToken') || '';
+    const authToken =
+      localStorage.getItem(LOCAL_STORAGE_ENUMS.AUTH_TOKEN) || '';
 
     return this._authToken || authToken;
   }
 
   @computed public get refreshToken(): string {
-    const refreshToken = localStorage.getItem('refreshToken') || '';
+    const refreshToken =
+      localStorage.getItem(LOCAL_STORAGE_ENUMS.REFRESH_TOKEN) || '';
 
     return this._refreshToken || refreshToken;
   }
 
-  constructor() {
-    const authToken = localStorage.getItem('authToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+  constructor(private rootStore: RootStore) {
+    const authToken = localStorage.getItem(LOCAL_STORAGE_ENUMS.AUTH_TOKEN);
+    const refreshToken = localStorage.getItem(
+      LOCAL_STORAGE_ENUMS.REFRESH_TOKEN
+    );
 
     this._authToken = authToken || '';
     this._refreshToken = refreshToken || '';
@@ -39,22 +76,63 @@ class AuthStore {
   @action clear = () => {
     this._authToken = '';
     this._refreshToken = '';
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('refreshToken');
+    this._user = null;
+    localStorage.removeItem(LOCAL_STORAGE_ENUMS.AUTH_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_ENUMS.REFRESH_TOKEN);
   };
 
   @action public setAuthToken = (token: string): void => {
-    localStorage.setItem('authToken', token);
+    localStorage.setItem(LOCAL_STORAGE_ENUMS.AUTH_TOKEN, token);
     this._authToken = token;
   };
 
   @action public setRefreshToken = (token: string): void => {
-    localStorage.setItem('refreshToken', token);
+    localStorage.setItem(LOCAL_STORAGE_ENUMS.REFRESH_TOKEN, token);
     this._refreshToken = token;
   };
 
   @action public setUser = (user: User) => {
     this._user = user;
+  };
+
+  @action public fetchMe = async () => {
+    if (this.authToken && this.refreshToken) {
+      try {
+        const {
+          data: { me },
+        }: { data: { me: User } } = await this.rootStore.appClient.query({
+          query: MeQuery,
+        });
+
+        this.setUser(me);
+      } catch (err) {
+        await this.refreshAccessToken();
+        this.fetchMe();
+      }
+    }
+  };
+
+  @action public refreshAccessToken = async () => {
+    if (this.isAuth) {
+      try {
+        const {
+          data: { token },
+        }: {
+          data: RefreshTokenResponse,
+        } = await this.rootStore.appClient.query({
+          query: RefreshTokenMutation,
+          variables: {
+            refreshToken: this.refreshToken,
+          },
+        });
+
+        this.setAuthToken(token?.accessToken!);
+        this.setRefreshToken(token?.refreshToken!);
+      } catch (err) {
+        // need to handle this case
+        this.clear();
+      }
+    }
   };
 }
 

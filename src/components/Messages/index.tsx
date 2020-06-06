@@ -1,18 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 
-import useSocket from 'hooks/useSocket';
+import useStore from 'hooks/useStore';
+import useSocket, { Socket } from 'hooks/useSocket';
 import FriendList from 'components/Messages/FriendList';
 import Message from 'components/Messages/Message';
 
-const Messages = () => {
+const Messages = observer(() => {
   const socket = useSocket();
+  const { authStore } = useStore();
+  const [mainSocket, setMainSocket] = useState<Socket>();
   const classes = useStyles();
 
   useEffect(() => {
-    socket.connect();
-  }, [socket]);
+    if (!mainSocket && authStore.isAuth) {
+      socket.connect();
+
+      socket.io?.on('connect', () => {
+        socket.io?.emit('user joined', authStore.user?.userName);
+        setMainSocket(socket);
+      });
+    }
+  }, [mainSocket, socket, authStore.isAuth]);
 
   return (
     <div className={classes.container}>
@@ -20,11 +31,11 @@ const Messages = () => {
       <Route
         exact={true}
         path="/messages/:username"
-        component={() => <Message socket={socket} />}
+        component={() => <Message socket={mainSocket} />}
       />
     </div>
   );
-};
+});
 
 const useStyles = makeStyles(() => ({
   container: {

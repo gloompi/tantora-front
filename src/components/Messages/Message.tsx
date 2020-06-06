@@ -4,15 +4,17 @@ import { useParams } from 'react-router-dom';
 import { Socket } from 'hooks/useSocket';
 
 interface IProps {
-  socket: Socket;
+  socket?: Socket;
 }
 
 const Message: FC<IProps> = ({ socket }) => {
   const { username } = useParams<{ username: string }>();
 
   useEffect(() => {
-    const check = socket.io?.emit('enter chat', { roomname: username });
-    console.log('CHECK', check);
+    if (socket !== undefined) {
+      socket?.io!.on('user joined', (data: any) => console.log("USER JOINED", data));
+      socket?.io!.emit('enter chat', username);
+    }
   }, [socket, username]);
 
   return (
