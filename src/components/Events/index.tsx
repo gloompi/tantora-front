@@ -1,10 +1,14 @@
 import React, { FC } from 'react'
-import MainScreen from '../MainScreen'
+import MainScreen from '../Home/MainScreen'
+import Search from '../Home/Search'
+import Events from './events'
 
-const Exibitions: FC = () => (
+const Exhibitions: FC = () => (
   <div>
-    <MainScreen></MainScreen>
+    <MainScreen />
+    <Search />
+    <Events />
   </div>
 )
 
-export default Exibitions;
+export default Exhibitions;
