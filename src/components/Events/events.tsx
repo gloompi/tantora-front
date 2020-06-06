@@ -79,7 +79,6 @@ const Events: FC = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-
   wrapper: {
     width: '100%',
     marginBottom: 150,
@@ -134,7 +133,6 @@ const useStyles = makeStyles((theme) => ({
     width: 97,
     height: 47,
   },
-
 }));
 
 export default Events;

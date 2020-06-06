@@ -1,4 +1,9 @@
-import React, { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'react';
+import React, {
+  useState,
+  useEffect,
+  ChangeEventHandler,
+  MouseEventHandler,
+} from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { makeStyles } from '@material-ui/core';
@@ -200,7 +205,7 @@ const Register = () => {
   };
 
   // register handler
-  const handleRegister: MouseEventHandler = ()=> {
+  const handleRegister: MouseEventHandler = () => {
     if (password === confirmPassword) {
       if (!disabled) {
         register();
@@ -266,8 +271,6 @@ const Register = () => {
           disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
-          //helperText="Incorrect entry."
-          //error
         />
         <TextField
           label="Email"
