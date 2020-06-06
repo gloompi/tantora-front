@@ -12,7 +12,9 @@ const Message: FC<IProps> = ({ socket }) => {
 
   useEffect(() => {
     if (socket !== undefined) {
-      socket?.io!.on('user joined', (data: any) => console.log("USER JOINED", data));
+      socket?.io!.on('user joined', (data: any) =>
+        console.log('USER JOINED', data)
+      );
       socket?.io!.emit('enter chat', username);
     }
   }, [socket, username]);

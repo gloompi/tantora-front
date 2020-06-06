@@ -11,7 +11,7 @@ import Loading from 'components/@common/Loading';
 
 const GET_EXHIBITONS = gql`
   query {
-    exhibitions(limit: 4) {
+    exhibitions(limit: 10) {
       exhibitionId
       name
       description
@@ -23,18 +23,15 @@ const GET_EXHIBITONS = gql`
 interface IResponse {
   exhibitions: Exhibition[];
 }
-interface IStyleProps {
-  bgSrc: string;
-}
 
 const Events: FC = () => {
-  const classes = useStyles({ bgSrc: require('assets/images/event-bp.jpg') })();
+  const classes = useStyles();
   const { data, loading, error } = useQuery<IResponse>(GET_EXHIBITONS);
 
   if (error) {
     return (
       <Typography color="error">
-        Error occured during fetching events: {error}!
+        Error occured during fetching events: ${error}!
       </Typography>
     );
   }
@@ -81,63 +78,62 @@ const Events: FC = () => {
   );
 };
 
-const useStyles = (props: IStyleProps) =>
-  makeStyles((theme) => ({
-    wrapper: {
-      width: '100%',
-      marginBottom: 150,
-    },
-    title: {
-      textAlign: 'center',
-      marginBottom: 50,
-      fontSize: '2.5rem',
-    },
-    container: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      width: `100%`,
-    },
-    event: {
-      textAlign: 'left',
-      width: '49%',
-      height: '300',
-      padding: '15px 20px',
-      marginBottom: 25,
-      backgroundColor: theme.palette.common.grey,
-      borderRadius: 5,
-      backgroundImage: `url(${props.bgSrc})`,
-      backgroundSize: 'cover',
-    },
-    eventTitle: {
-      fontFamily: 'Roboto',
-      color: theme.palette.common.white,
-      fontWeight: 'bolder',
-    },
-    text: {
-      height: 150,
-      fontSize: 18,
-      fontFamily: 'Roboto',
-      color: theme.palette.common.white,
-      fontWeight: 'bolder',
-    },
-    boxForDateBtn: {
-      display: 'flex',
-      alignItems: 'flex-end',
-      justifyContent: 'space-between',
-    },
-    data: {
-      fontSize: 22,
-      fontWeight: 'bold',
-      color: theme.palette.common.white,
-    },
-    joinBtn: {
-      fontWeight: 'bolder',
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
-      width: 97,
-      height: 47,
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    width: '100%',
+    marginBottom: 150,
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 75,
+    fontSize: '2.5rem',
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    width: `100%`,
+  },
+  event: {
+    textAlign: 'left',
+    width: '100%',
+    minWidth: 480,
+    height: '300',
+    padding: '15px 20px',
+    marginBottom: 25,
+    backgroundColor: theme.palette.common.grey,
+    borderRadius: 5,
+    backgroundSize: 'cover',
+  },
+  eventTitle: {
+    fontFamily: 'Roboto',
+    color: theme.palette.common.black,
+    fontWeight: 'bold',
+  },
+  text: {
+    minHeight: 80,
+    fontSize: 18,
+    fontFamily: 'Roboto',
+    color: theme.palette.common.black,
+    fontWeight: 'bolder',
+  },
+  boxForDateBtn: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
+  data: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: theme.palette.common.black,
+  },
+  joinBtn: {
+    fontWeight: 'bolder',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    width: 97,
+    height: 47,
+  },
+}));
 
 export default Events;
