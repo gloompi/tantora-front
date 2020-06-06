@@ -271,6 +271,7 @@ const Register = () => {
           disabled={registerPayload.loading}
           fullWidth={true}
           required={true}
+          error={password !== confirmPassword}
         />
         <TextField
           label="Email"
