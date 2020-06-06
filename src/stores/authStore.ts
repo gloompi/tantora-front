@@ -1,6 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import { gql } from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
 
 import { User, RefreshTokenResponse } from 'generated/graphql';
 import { RootStore } from './rootStore';
@@ -96,11 +97,11 @@ class AuthStore {
   };
 
   @action public fetchMe = async () => {
-    if (this.authToken && this.refreshToken) {
+    if (this.refreshToken) {
       try {
         const {
           data: { me },
-        }: { data: { me: User } } = await this.rootStore.appClient.query({
+        } = await this.rootStore.appClient.query<{ me: User }>({
           query: MeQuery,
         });
 
@@ -109,25 +110,32 @@ class AuthStore {
         await this.refreshAccessToken();
         this.fetchMe();
       }
+    } else {
+      this.clear();
     }
   };
 
   @action public refreshAccessToken = async () => {
-    if (this.isAuth) {
+    if (this.refreshToken) {
       try {
-        const {
-          data: { token },
-        }: {
-          data: RefreshTokenResponse,
-        } = await this.rootStore.appClient.query({
-          query: RefreshTokenMutation,
+        const { data } = await this.rootStore.appClient.mutate<{
+          refreshToken: RefreshTokenResponse;
+        }>({
+          mutation: RefreshTokenMutation,
           variables: {
             refreshToken: this.refreshToken,
           },
         });
 
-        this.setAuthToken(token?.accessToken!);
-        this.setRefreshToken(token?.refreshToken!);
+        const accessToken = get(data, 'refreshToken.token.accessToken', null);
+        const refreshToken = get(data, 'refreshToken.token.refreshToken', null);
+
+        if (accessToken && refreshToken) {
+          this.setAuthToken(accessToken);
+          this.setRefreshToken(refreshToken);
+        } else {
+          this.clear();
+        }
       } catch (err) {
         // need to handle this case
         this.clear();

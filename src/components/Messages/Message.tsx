@@ -19,7 +19,7 @@ const Message: FC<IProps> = ({ socket }) => {
 
   return (
     <div>
-      <h3>Message</h3>
+      <h3>{username}</h3>
     </div>
   );
 };
