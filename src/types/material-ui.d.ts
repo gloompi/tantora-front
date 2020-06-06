@@ -11,5 +11,6 @@ declare module '@material-ui/core/styles/createMixins' {
 declare module '@material-ui/core/styles/createPalette' {
   interface CommonColors {
     blue: string;
+    grey: string;
   }
 }
