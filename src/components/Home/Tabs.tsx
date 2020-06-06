@@ -22,7 +22,7 @@ const MyTabs: FC = () => {
           className={classes.tabs}
           textColor="primary"
         >
-          <Tab label="Visitors" className={classes.tab} />
+          <Tab label="Visitors" className={classes.tab} selected={"white"}/>
           <Tab label="Exhibitions" className={classes.tab} />
           <Tab label="Organizations" className={classes.tab} />
         </Tabs>
@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     margin: 'auto',
     width: '100%',
-    border: 'none',
   },
+ 
   tab: {
     width: '30%',
     borderRadius: 25,
@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.blue,
     color: theme.palette.common.white,
     height: 56,
-    margin: '0 6%',
   },
 }));
 

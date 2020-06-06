@@ -7,7 +7,7 @@ interface IStyleProps {
   bgSrc: string;
 }
 interface IProps {
-  value: string;
+  title: string;
   bgSrc: string;
 }
 
@@ -17,7 +17,7 @@ const MainScreen: FC<IProps> = (props) => {
   return (
     <div className={classes.wrapper}>
       <Typography className={classes.title} variant="h1">
-        {props.value}
+        {props.title}
       </Typography>
     </div>
   );
