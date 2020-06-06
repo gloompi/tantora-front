@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import hexToRgb from 'hex-rgb';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -6,14 +6,18 @@ import Typography from '@material-ui/core/Typography';
 interface IStyleProps {
   bgSrc: string;
 }
+interface IProps {
+  title: string;
+  bgSrc: string;
+}
 
-const MainScreen = () => {
-  const classes = useStyles({ bgSrc: require('assets/images/bgImg.jpg') })();
+const MainScreen: FC<IProps> = (props) => {
+  const classes = useStyles({ bgSrc: props.bgSrc })();
 
   return (
     <div className={classes.wrapper}>
       <Typography className={classes.title} variant="h1">
-        Tantora
+        {props.title}
       </Typography>
     </div>
   );

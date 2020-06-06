@@ -94,7 +94,7 @@ const Login = () => {
             disabled={loading}
             onClick={() => handleLogin()}
           >
-            Confirm
+            Login
           </Button>
           <Link to="/register">
             <Button variant="outlined" color="primary" disabled={loading}>

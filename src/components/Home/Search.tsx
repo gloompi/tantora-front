@@ -17,28 +17,31 @@ const Search: FC = () => {
         className={classes.input}
         placeholder="What are you looking for..."
       />
-      <Button color="primary" variant="contained" className={classes.button}>
+      <Button variant="contained" className={classes.button}>
         Search
       </Button>
     </Container>
   );
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   searchField: {
     position: 'relative',
-    width: '100%',
+    width: '60%',
     marginBottom: 150,
+    alignItems: 'center',
+    minWidth: 480,
   },
   label: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 50,
     fontWeight: 'bold',
+    fontSize: 30,
   },
   input: {
     width: '100%',
-    height: 35,
+    height: 40,
     padding: '25px 15px',
     borderRadius: 4,
     zIndex: 100,
@@ -46,11 +49,14 @@ const useStyles = makeStyles({
   button: {
     position: 'absolute',
     justifyContent: 'right',
-    right: 0,
-    marginTop: 1,
-    marginRight: 1,
+    height: 46,
+    right: 22,
+    bottom: 5,
+    fontWeight: 'bolder',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
     zIndex: 150,
   },
-});
+}));
 
 export default Search;
