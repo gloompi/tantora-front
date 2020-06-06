@@ -9,6 +9,7 @@ let theme = createMuiTheme({
     common: {
       white: '#fff',
       blue: '#001DBE',
+      grey: '#C4C4C4',
     },
   },
 });

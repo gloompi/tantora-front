@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     width: '60%',
     marginBottom: 150,
     alignItems: 'center',
+    minWidth: 480,
   },
   label: {
     display: 'flex',

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 25,
     fontWeight: 'bolder',
     backgroundColor: theme.palette.common.blue,
-    color: 'white',
+    color: theme.palette.common.white,
     height: 56,
     margin: '0 6%',
   },

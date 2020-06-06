@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
-import MainScreen from '../Home/MainScreen';
+import MainScreen from '../@common/MainScreen';
 import Search from '../Home/Search';
 import Events from './events';
 
+const image = require('../../assets/images/bgImg.jpg');
+
 const Exhibitions: FC = () => (
   <div>
-    <MainScreen />
+    <MainScreen value={'Tantora'} bgSrc={image} />
     <Search />
     <Events />
   </div>

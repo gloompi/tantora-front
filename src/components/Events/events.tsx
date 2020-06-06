@@ -95,11 +95,12 @@ const useStyles = makeStyles((theme) => ({
   },
   event: {
     textAlign: 'left',
-    width: '70%',
+    width: '100%',
+    minWidth: 480,
     height: '300',
     padding: '15px 20px',
     marginBottom: 25,
-    backgroundColor: '#C4C4C4',
+    backgroundColor: theme.palette.common.grey,
     borderRadius: 5,
     backgroundSize: 'cover',
   },
@@ -109,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   text: {
-    height: 80,
+    minHeight: 80,
     fontSize: 18,
     fontFamily: 'Roboto',
     color: theme.palette.common.black,
@@ -128,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   joinBtn: {
     fontWeight: 'bolder',
     backgroundColor: theme.palette.common.blue,
-    color: 'white',
+    color: theme.palette.common.white,
     borderRadius: 25,
     width: 97,
     height: 47,
