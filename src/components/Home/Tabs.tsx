@@ -1,6 +1,5 @@
 import React, { FC, ChangeEvent } from 'react';
 import Tab from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import { makeStyles } from '@material-ui/core';
 
@@ -15,6 +14,7 @@ const MyTabs: FC = () => {
 
   return (
     <div>
+<<<<<<< HEAD
       <AppBar position="static">
         <Tabs
           value={value}
@@ -27,6 +27,18 @@ const MyTabs: FC = () => {
           <Tab label="Organizations" className={classes.tab} />
         </Tabs>
       </AppBar>
+=======
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        className={classes.tabs}
+        textColor="primary"
+      >
+        <Tab label="Visitors" className={classes.tab} />
+        <Tab label="Exhibitions" className={classes.tab} />
+        <Tab label="Organizations" className={classes.tab} />
+      </Tabs>
+>>>>>>> 63c5d6aec0425ce608e207c9cea96c6e542345a3
       <TabPanel value={value} index={0}>
         Item One
       </TabPanel>
@@ -43,18 +55,31 @@ const MyTabs: FC = () => {
 const useStyles = makeStyles((theme) => ({
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    justifyContent: 'space-between',
     margin: 'auto',
     width: '100%',
+<<<<<<< HEAD
+=======
+
+    '& .MuiTabs-flexContainer': {
+      justifyContent: 'space-between',
+    },
+>>>>>>> 63c5d6aec0425ce608e207c9cea96c6e542345a3
   },
  
   tab: {
     width: '30%',
-    borderRadius: 25,
     fontWeight: 'bolder',
-    backgroundColor: theme.palette.common.blue,
+    backgroundColor: theme.palette.primary.dark,
     color: theme.palette.common.white,
     height: 56,
+<<<<<<< HEAD
+=======
+    marginBottom: 8,
+
+    '&.Mui-selected': {
+      color: theme.palette.common.white,
+    },
+>>>>>>> 63c5d6aec0425ce608e207c9cea96c6e542345a3
   },
 }));
 

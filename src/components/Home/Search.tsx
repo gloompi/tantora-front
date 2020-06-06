@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '100%',
-    height: 35,
+    height: 40,
     padding: '25px 15px',
     borderRadius: 4,
     zIndex: 100,
@@ -48,15 +48,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     position: 'absolute',
     justifyContent: 'right',
-    right: 20,
-    marginTop: 1,
-    marginRight: 1,
-    zIndex: 150,
-    borderRadius: 25,
     height: 46,
+    right: 22,
+    bottom: 5,
     fontWeight: 'bolder',
-    backgroundColor: theme.palette.common.blue,
-    color: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    zIndex: 150,
   },
 }));
 
