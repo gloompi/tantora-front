@@ -169,7 +169,7 @@ const useStyles = (online: boolean) =>
       },
       '& .text': {
         fontSize: 16,
-      }
+      },
     },
   }));
 
