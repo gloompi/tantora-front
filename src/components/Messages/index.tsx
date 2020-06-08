@@ -19,7 +19,6 @@ const Messages = observer(() => {
       socket.connect();
 
       socket.io?.on('connect', () => {
-        socket.io?.emit('user joined', authStore.user?.userName);
         setMainSocket(socket);
       });
     }
@@ -40,19 +39,13 @@ const Messages = observer(() => {
 const useStyles = makeStyles(() => ({
   container: {
     position: 'relative',
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     width: '100%',
     height: '100%',
     minHeight: '100vh',
     backgroundSize: 'cover',
-
-    '&:before': {
-      content: `""`,
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      width: '100%',
-      height: '100%',
-    },
   },
 }));
 
