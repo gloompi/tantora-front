@@ -1,16 +1,17 @@
-import React, { FC } from 'react';
-import ApolloClient from 'apollo-boost';
+import React, { FC, useEffect } from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { observer } from 'mobx-react-lite';
 import loadable from '@loadable/component';
 
 import 'normalize.css';
 import './App.scss';
 
 import theme from 'theme';
-import env from '@config/env';
+import rootStore from 'stores/rootStore';
+import { client } from 'client';
 import { StoreProvider } from 'hooks/useStore';
 import Loading from 'components/@common/Loading';
 import Header from 'components/@common/Header';
@@ -36,21 +37,13 @@ const LoadableMessages = loadable(() => import('components/Messages'), {
   fallback: <Loading />,
 });
 
-const client = new ApolloClient({
-  uri: env.backendUrl,
-  request: (operation) => {
-    const token = localStorage.getItem('authToken');
-
-    operation.setContext({
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-      },
-    });
-  },
-});
-
-const App: FC = () => {
+const App: FC = observer(() => {
   const classes = useStyles();
+  const { authStore } = rootStore;
+
+  useEffect(() => {
+    authStore.fetchMe();
+  }, [authStore.authToken]);
 
   return (
     <ApolloProvider client={client}>
@@ -86,7 +79,7 @@ const App: FC = () => {
       </StoreProvider>
     </ApolloProvider>
   );
-};
+});
 
 const useStyles = makeStyles({
   main: {

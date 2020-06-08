@@ -34,17 +34,19 @@ const FriendList = () => {
       </Typography>
       <List>
         {friends.map(({ userName }, idx) => (
-          <>
-            <Link to={`/messages/${userName}`} className={classes.link}>
-              <ListItem key={userName}>
-                <ListItemIcon>
-                  <UserIcon />
-                </ListItemIcon>
-                <ListItemText>{userName}</ListItemText>
-              </ListItem>
-            </Link>
+          <Link
+            key={userName}
+            to={`/messages/${userName}`}
+            className={classes.link}
+          >
+            <ListItem key={userName}>
+              <ListItemIcon>
+                <UserIcon />
+              </ListItemIcon>
+              <ListItemText>{userName}</ListItemText>
+            </ListItem>
             {idx < friends.length - 1 && <Divider />}
-          </>
+          </Link>
         ))}
       </List>
     </div>
@@ -56,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     width: '100%',
     height: '100%',
-    maxWidth: 350,
+    maxWidth: 300,
     minHeight: '100vh',
     padding: '90px 25px',
     color: theme.palette.common.white,
