@@ -87,14 +87,13 @@ const useStyles = (props: IStyleProps) =>
       width: '100%',
       marginBottom: 150,
       padding: '0px 50px',
-
     },
     title: {
       textAlign: 'center',
       marginBottom: 80,
       fontWeight: 'bold',
       fontSize: 35,
-      fontFamily: 'Roboto'
+      fontFamily: 'Roboto',
     },
     container: {
       display: 'flex',
