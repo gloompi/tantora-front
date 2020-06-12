@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
-
 import { Exhibition } from 'generated/graphql';
 import Loading from 'components/@common/Loading';
 
@@ -29,7 +28,6 @@ interface IResponse {
 const Events: FC = () => {
   const classes = useStyles();
   const { data, loading, error } = useQuery<IResponse>(GET_EXHIBITONS);
-
   if (error) {
     return (
       <Typography color="error">
