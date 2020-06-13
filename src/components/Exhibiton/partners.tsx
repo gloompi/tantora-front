@@ -14,7 +14,7 @@ const Partners = () => {
         Our Partners
       </Typography>
       <Grid>
-        <Container className={classes.container}>
+        <Grid container={true} className={classes.container} justify="center">
           <Grid>
             <Paper className={classes.paperBlack} />
           </Grid>
@@ -33,7 +33,7 @@ const Partners = () => {
           <Grid>
             <Paper className={classes.paperWhite} />
           </Grid>
-        </Container>
+        </Grid>
       </Grid>
     </Container>
   );

@@ -89,11 +89,14 @@ const useStyles = (props: IStyleProps) =>
     wrapper: {
       width: '100%',
       marginBottom: 150,
+      padding: '0px 50px',
     },
     title: {
       textAlign: 'center',
-      marginBottom: 50,
-      fontSize: '2.5rem',
+      marginBottom: 80,
+      fontWeight: 'bold',
+      fontSize: 35,
+      fontFamily: 'Roboto',
     },
     container: {
       display: 'flex',
@@ -105,7 +108,7 @@ const useStyles = (props: IStyleProps) =>
       textAlign: 'left',
       width: '49%',
       height: '300',
-      padding: '15px 20px',
+      padding: '15px 30px',
       marginBottom: 25,
       backgroundColor: theme.palette.common.grey,
       borderRadius: 5,

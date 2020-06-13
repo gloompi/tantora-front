@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 50,
     fontWeight: 'bold',
     fontSize: 35,
+    fontFamily: 'Roboto',
   },
   input: {
     width: '100%',
