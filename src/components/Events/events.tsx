@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 import { Exhibition } from 'generated/graphql';
 import Loading from 'components/@common/Loading';
@@ -65,9 +66,11 @@ const Events: FC = () => {
                     <Typography variant="body2" className={classes.data}>
                       {`Date: ${year}/${month}/${day}`}
                     </Typography>
-                    <Button className={classes.joinBtn} variant="contained">
-                      Join
-                    </Button>
+                    <Link to="/exhibition" key="Join">
+                      <Button className={classes.joinBtn} variant="contained">
+                        Join
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               );

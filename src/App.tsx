@@ -24,6 +24,9 @@ const LoadableHome = loadable(() => import('components/Home'), {
 const LoadableExhibitions = loadable(() => import('components/Events'), {
   fallback: <Loading />,
 });
+const LoadableExhibition = loadable(() => import('components/Exhibiton'), {
+  fallback: <Loading />,
+});
 const LoadableLogin = loadable(() => import('components/Login'), {
   fallback: <Loading />,
 });
@@ -58,6 +61,9 @@ const App: FC = observer(() => {
                 </Route>
                 <Route path="/exhibitions">
                   <LoadableExhibitions />
+                </Route>
+                <Route path="/exhibition">
+                  <LoadableExhibition />
                 </Route>
                 <Route path="/admins">
                   <LoadableAdmins />

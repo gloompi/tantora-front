@@ -136,6 +136,7 @@ const Register = () => {
       } else if (userType === ROLE_ENUM.ORGANIZER) {
         addToAdmins(userId);
       }
+      <Redirect to="/" />;
     }
   }, [
     userId,
@@ -210,10 +211,6 @@ const Register = () => {
       if (!disabled) {
         register();
       }
-    } else {
-      alert('Please emter your Password and Confirm it with the same value');
-      setPassword('');
-      setConfirmPassword('');
     }
   };
 
