@@ -10,7 +10,7 @@ const Search: FC = () => {
   return (
     <Container maxWidth="lg" className={classes.searchField}>
       <label htmlFor="text" className={classes.label}>
-        Keep in touch with all online exebitions
+        Keep in touch with all online exhibitions
       </label>
       <Input
         type="text"
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginBottom: 50,
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 35,
   },
   input: {
     width: '100%',

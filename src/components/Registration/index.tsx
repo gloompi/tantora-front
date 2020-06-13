@@ -122,12 +122,6 @@ const Register = () => {
   });
 
   useEffect(() => {
-    // if(registerPayload.called && !registerPayload.error) {
-    //     return <Redirect to="/" />
-    //   } else {
-    //     console.log('You have failed registration dui to this reason:' + registerPayload.error)
-    //   }
-
     if (
       registerPayload.called &&
       registerPayload.loading === false &&

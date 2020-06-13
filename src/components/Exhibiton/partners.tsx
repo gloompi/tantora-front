@@ -14,7 +14,7 @@ const Partners = () => {
         Our Partners
       </Typography>
       <Grid>
-        <Grid container justify="center">
+        <Container className={classes.container}>
           <Grid>
             <Paper className={classes.paperBlack} />
           </Grid>
@@ -33,7 +33,7 @@ const Partners = () => {
           <Grid>
             <Paper className={classes.paperWhite} />
           </Grid>
-        </Grid>
+        </Container>
       </Grid>
     </Container>
   );
@@ -45,6 +45,9 @@ const useStyles = () =>
       color: theme.palette.common.black,
       flexGrow: 1,
       margin: '50px auto',
+    },
+    container: {
+      justify: 'center',
     },
     title: {
       margin: '40px auto',
