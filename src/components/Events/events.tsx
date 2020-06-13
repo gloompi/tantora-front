@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
-
 import { Exhibition } from 'generated/graphql';
 import Loading from 'components/@common/Loading';
 

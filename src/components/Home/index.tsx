@@ -4,7 +4,7 @@ import Search from './Search';
 import Events from './Events';
 import About from './AboutProject';
 
-const image = require('../../assets/images/bgImg.jpg');
+const image = require('../../assets/images/torrento.jpg');
 
 const Home: FC = () => (
   <>
