@@ -5,9 +5,8 @@ WORKDIR /app
 COPY ./package.json .
 COPY ./yarn.lock .
 
-RUN yarn config set registry https://registry.yarnpkg.com
-RUN yarn
+RUN npm install
 
 COPY ./ /app
 
-RUN yarn run build
+RUN npm run build
