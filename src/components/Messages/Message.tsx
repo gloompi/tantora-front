@@ -6,6 +6,7 @@ import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
 } from 'react';
+import get from 'lodash/get';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
@@ -14,15 +15,24 @@ import Typography from '@material-ui/core/Typography';
 
 import { Socket } from 'hooks/useSocket';
 import useStore from 'hooks/useStore';
+import roomCreator from 'helpers/roomCreator';
 
 interface IProps {
   socket?: Socket;
 }
 
 interface IMessage {
-  username: string;
-  text: string;
-  time: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  createdDate: string;
+}
+
+interface IMessagesResponse {
+  messages: IMessage[];
+  userName: string;
+  firstName: string;
+  lastName: string;
 }
 
 const Message: FC<IProps> = ({ socket }) => {
@@ -30,16 +40,27 @@ const Message: FC<IProps> = ({ socket }) => {
   const [userOnline, setUserOnline] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessage] = useState<IMessage[]>([]);
-  const { username } = useParams<{ username: string }>();
+  const { username, userid } = useParams<{
+    username: string;
+    userid: string;
+  }>();
   const contentRef = useRef(null);
-
   const classes = useStyles(userOnline)();
+
+  const room = roomCreator(
+    get(authStore, 'user.userName', ''),
+    username,
+    get(authStore, 'user.userId', ''),
+    userid
+  );
 
   useEffect(() => {
     if (socket !== undefined) {
       socket.io?.emit('enter chat', {
         username: authStore.user?.userName,
-        room: username,
+        userid: authStore.user?.userId,
+        receiverid: userid,
+        room,
       });
 
       socket.io!.on('user joined', (newUser: string) => {
@@ -50,9 +71,21 @@ const Message: FC<IProps> = ({ socket }) => {
 
       socket.io?.on('new message', (data: IMessage) => {
         setMessage((state) => [...state, data]);
+        scrollToBottom();
+      });
+
+      socket.io?.on('messages list', (data: IMessagesResponse) => {
+        setMessage((state) => [...data.messages, ...state]);
+        scrollToBottom();
       });
     }
   }, [socket, username]);
+
+  const scrollToBottom = () => {
+    if (Boolean(contentRef) && Boolean(contentRef.current)) {
+      (contentRef.current as any).scrollTop = (contentRef.current as any).scrollHeight;
+    }
+  };
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setChatInput(e.target.value);
@@ -62,10 +95,6 @@ const Message: FC<IProps> = ({ socket }) => {
     if (socket !== undefined) {
       socket.io?.emit('new message', chatInput);
       setChatInput('');
-
-      if (Boolean(contentRef) && Boolean(contentRef.current)) {
-        (contentRef.current as any).scrollTop = (contentRef.current as any).scrollHeight;
-      }
     }
   };
 
@@ -84,10 +113,10 @@ const Message: FC<IProps> = ({ socket }) => {
         {messages.map((message, idx) => (
           <div key={idx} className="wrapper">
             <div className="header">
-              <span className="username">{message.username}</span>
-              <span className="time">{message.time}</span>
+              <span className="username">{message.senderId}</span>
+              <span className="time">{message.createdDate}</span>
             </div>
-            <p className="text">{message.text}</p>
+            <p className="text">{message.content}</p>
           </div>
         ))}
       </div>

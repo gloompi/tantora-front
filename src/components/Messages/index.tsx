@@ -22,14 +22,19 @@ const Messages = observer(() => {
         setMainSocket(socket);
       });
     }
+
+    if (mainSocket !== undefined && authStore.isAuth) {
+      mainSocket.io?.emit('get friends', authStore.user?.userId);
+      mainSocket.io?.emit('get recent', authStore.user?.userId);
+    }
   }, [mainSocket, socket, authStore.isAuth]);
 
   return (
     <div className={classes.container}>
-      <FriendList />
+      <FriendList socket={mainSocket} />
       <Route
         exact={true}
-        path="/messages/:username"
+        path="/messages/:username/:userid"
         component={() => <Message socket={mainSocket} />}
       />
     </div>
