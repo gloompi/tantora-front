@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-FROM node:alpine
-
-WORKDIR /usr/app
-
-COPY package.json ./
-RUN yarn
-
-COPY ./ ./
-
-=======
 FROM node:14.4.0-alpine
 
 WORKDIR /app
@@ -18,5 +7,4 @@ RUN yarn
 
 COPY ./ ./
 
->>>>>>> development
 CMD ["yarn", "start"]
