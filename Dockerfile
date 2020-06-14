@@ -2,10 +2,11 @@ FROM node:14.4.0-alpine
 
 WORKDIR /app
 
-COPY ./package*.json .
+COPY ./package.json .
+COPY ./yarn.lock .
 
-RUN npm install --loglevel=error
+RUN yarn
 
 COPY ./ /app
 
-RUN npm run build
+RUN yarn run build

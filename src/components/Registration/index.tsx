@@ -210,10 +210,6 @@ const Register = () => {
       if (!disabled) {
         register();
       }
-    } else {
-      alert('Please emter your Password and Confirm it with the same value');
-      setPassword('');
-      setConfirmPassword('');
     }
   };
 

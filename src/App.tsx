@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react-lite';
 import loadable from '@loadable/component';
 
-import 'mobx-react-lite/batchingForReactDom';
 import 'normalize.css';
 import './App.scss';
 
@@ -23,6 +22,9 @@ const LoadableHome = loadable(() => import('components/Home'), {
   fallback: <Loading />,
 });
 const LoadableExhibitions = loadable(() => import('components/Events'), {
+  fallback: <Loading />,
+});
+const LoadableExhibition = loadable(() => import('components/Exhibiton'), {
   fallback: <Loading />,
 });
 const LoadableLogin = loadable(() => import('components/Login'), {
@@ -59,6 +61,9 @@ const App: FC = observer(() => {
                 </Route>
                 <Route path="/exhibitions">
                   <LoadableExhibitions />
+                </Route>
+                <Route path="/exhibition">
+                  <LoadableExhibition />
                 </Route>
                 <Route path="/admins">
                   <LoadableAdmins />
