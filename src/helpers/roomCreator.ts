@@ -2,7 +2,7 @@ export default (
   userName: string,
   receiverName: string,
   userId: string,
-  receiverId: string,
+  receiverId: string
 ): string => {
   const name =
     userName < receiverName
