@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -54,11 +54,14 @@ const useStyles = () =>
     },
     Container: {
       textAlign: 'center',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      marginBottom: 100,
     },
     innerContainer: {
       textAlign: 'center',
       width: 240,
-      display: 'inline-block',
       margin: '30px 2% 50px',
       border: 'black 1px solid',
       padding: '5px',
@@ -66,6 +69,7 @@ const useStyles = () =>
     text: {
       textAlign: 'left',
       fontSize: 18,
+      width: '100%',
       lineHeight: 2,
     },
     img: {

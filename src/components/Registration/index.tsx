@@ -122,6 +122,10 @@ const Register = () => {
   });
 
   useEffect(() => {
+    if (registerPayload.called && registerPayload.loading) {
+      <Redirect to="/" />;
+    }
+
     if (
       registerPayload.called &&
       registerPayload.loading === false &&

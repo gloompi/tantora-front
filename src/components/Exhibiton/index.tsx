@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import MainScreen from '../@common/MainScreen';
-import About from './about';
-import ColoredLine from './hrLine';
-import Reason from './reason';
-import Partners from './partners';
-import News from './news';
+import About from './About';
+import ColoredLine from './HrLine';
+import Reason from './Reason';
+import Partners from './Partners';
+import News from './News';
 
 const image = require('../../assets/images/exhibition.jfif');
 

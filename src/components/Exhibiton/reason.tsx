@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import WifiTetheringRoundedIcon from '@material-ui/icons/WifiTetheringRounded';
 import Container from '@material-ui/core/Container';
@@ -80,10 +80,12 @@ const useStyles = () =>
     container: {
       width: 360,
       height: 280,
-      display: 'inline-block',
       textAlign: 'left',
     },
     insideWrapper: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
       textAlign: 'center',
       '& > *': {
         margin: theme.spacing(1),

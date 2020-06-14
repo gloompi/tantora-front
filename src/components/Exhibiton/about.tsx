@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Exhibition } from 'generated/graphql';
 import ExhibitorsIcon from '@material-ui/icons/Business';
