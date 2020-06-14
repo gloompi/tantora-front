@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -8,35 +8,45 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import UserIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
+import { Socket } from 'hooks/useSocket';
 
-const friends = [
-  {
-    userName: 'Tik-tak',
-  },
-  {
-    userName: 'Kolobok',
-  },
-  {
-    userName: 'Jiraya',
-  },
-  {
-    userName: 'Kakashi',
-  },
-];
+interface IUser {
+  userId: string;
+  userName: string;
+  firstName: string;
+  lastName: string;
+}
 
-const FriendList = () => {
+interface IProps {
+  socket?: Socket;
+}
+
+const FriendList: FC<IProps> = ({ socket }) => {
+  const [friends, setFriends] = useState<IUser[]>([]);
   const classes = useStyles();
+
+  useEffect(() => {
+    if (socket) {
+      // socket.io?.on('friends', (data: IUser[]) => {
+      //   setFriends(data);
+      // });
+
+      socket.io?.on('recent messages', (data: IUser[]) => {
+        setFriends(data);
+      });
+    }
+  }, [socket]);
 
   return (
     <div className={classes.container}>
       <Typography variant="h6" color="inherit">
-        Friends
+        Recents
       </Typography>
       <List>
-        {friends.map(({ userName }, idx) => (
+        {friends.map(({ userName, userId }, idx) => (
           <Link
             key={userName}
-            to={`/messages/${userName}`}
+            to={`/messages/${userName}/${userId}`}
             className={classes.link}
           >
             <ListItem key={userName}>

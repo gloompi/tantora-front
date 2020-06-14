@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import MainScreen from '../@common/MainScreen';
-import About from './About';
-import ColoredLine from './HrLine';
-import Reason from './Reason';
-import Partners from './Partners';
-import News from './News';
+// import About from './About';
+// import ColoredLine from './HrLine';
+// import Reason from './Reason';
+// import Partners from './Partners';
+// import News from './News';
 
 const image = require('../../assets/images/exhibition.jfif');
 
@@ -16,13 +16,13 @@ const Exhibition: FC = () => {
   return (
     <div className={classes.wrapper}>
       <MainScreen bgSrc={image} title="Exhibition Name" />
-      <About />
+      {/* <About />
       <ColoredLine color="black" />
       <Reason />
       <ColoredLine color="black" />
       <Partners />
       <ColoredLine color="black" />
-      <News />
+      <News /> */}
     </div>
   );
 };
