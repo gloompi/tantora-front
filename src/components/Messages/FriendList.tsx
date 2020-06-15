@@ -32,6 +32,7 @@ const FriendList: FC<IProps> = ({ socket }) => {
       // });
 
       socket.io?.on('recent messages', (data: IUser[]) => {
+        console.log('MESSAGES', data);
         setFriends(data);
       });
     }
