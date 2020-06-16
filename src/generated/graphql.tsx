@@ -97,7 +97,6 @@ export type AddToProducerResponse = {
 export type LoginResponse = {
    __typename?: 'LoginResponse';
   token?: Maybe<Token>;
-  user?: Maybe<User>;
 };
 
 export type CreateUserResponse = {
