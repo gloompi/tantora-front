@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 import get from 'lodash/get';
 
 import { LoginResponse } from 'generated/graphql';
@@ -29,11 +29,11 @@ class LoginStore {
 
   @action private setLoading = (val: boolean): void => {
     this.loading = val;
-  }
+  };
 
   @action private setError = (error: Error | null): void => {
     this.error = error;
-  }
+  };
 
   @action public handleLogin = async (userName: string, password: string) => {
     if (!this.authStore.isAuth) {
@@ -41,20 +41,24 @@ class LoginStore {
       this.setError(null);
 
       try {
-        const { data } = await this.rootStore.appClient.query<{ loginUser: LoginResponse }>({
+        const { data } = await this.rootStore.appClient.query<{
+          loginUser: LoginResponse;
+        }>({
           query: LoginUserQuery,
-          variables: { userName, password }
+          variables: { userName, password },
         });
 
         this.authStore.setAuthToken(get(data, 'loginUser.token.accessToken'));
-        this.authStore.setRefreshToken(get(data, 'loginUser.token.refreshToken'));
+        this.authStore.setRefreshToken(
+          get(data, 'loginUser.token.refreshToken')
+        );
         this.setLoading(false);
       } catch (e) {
         this.setError(e);
         this.setLoading(false);
       }
     }
-  }
+  };
 }
 
 export default LoginStore;

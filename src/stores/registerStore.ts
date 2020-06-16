@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 import get from 'lodash/get';
 
 import { CreateUserResponse } from 'generated/graphql';
@@ -80,25 +80,32 @@ class RegisterStore {
 
   @action private setLoading = (val: boolean): void => {
     this.loading = val;
-  }
+  };
 
   @action private setError = (error: Error | null): void => {
     this.error = error;
-  }
+  };
 
-  @action public handleRegister = async ({ role, ...variables }: IRegisterProps) => {
+  @action public handleRegister = async ({
+    role,
+    ...variables
+  }: IRegisterProps) => {
     if (!this.authStore.isAuth) {
       this.setLoading(true);
       this.setError(null);
 
       try {
-        const { data } = await this.rootStore.appClient.mutate<{ createUser: CreateUserResponse }>({
+        const { data } = await this.rootStore.appClient.mutate<{
+          createUser: CreateUserResponse;
+        }>({
           mutation: CreateUserMutation,
           variables,
         });
 
         this.authStore.setAuthToken(get(data, 'createUser.token.accessToken'));
-        this.authStore.setRefreshToken(get(data, 'createUser.token.refreshToken'));
+        this.authStore.setRefreshToken(
+          get(data, 'createUser.token.refreshToken')
+        );
         const userId = get(data, 'createUser.user.userId');
 
         if (role === ROLE_ENUM.PRODUCER) {
@@ -119,7 +126,7 @@ class RegisterStore {
         this.setLoading(false);
       }
     }
-  }
+  };
 }
 
 export default RegisterStore;

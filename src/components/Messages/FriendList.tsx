@@ -27,12 +27,7 @@ const FriendList: FC<IProps> = ({ socket }) => {
 
   useEffect(() => {
     if (socket) {
-      // socket.io?.on('friends', (data: IUser[]) => {
-      //   setFriends(data);
-      // });
-
       socket.io?.on('recent messages', (data: IUser[]) => {
-        console.log('MESSAGES', data);
         setFriends(data);
       });
     }

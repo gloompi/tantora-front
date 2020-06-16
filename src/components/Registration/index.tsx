@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  ChangeEventHandler,
-  MouseEventHandler,
-} from 'react';
+import React, { useState, ChangeEventHandler, MouseEventHandler } from 'react';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import isEmpty from 'lodash/isEmpty';

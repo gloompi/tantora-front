@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react-lite';
 import loadable from '@loadable/component';
 
-import 'mobx-react-lite/batchingForReactDom'
+import 'mobx-react-lite/batchingForReactDom';
 import 'normalize.css';
 import './App.scss';
 

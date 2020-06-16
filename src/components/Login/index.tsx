@@ -31,7 +31,7 @@ const Login = observer(() => {
 
   return (
     <Container className={classes.container}>
-      {authStore.isAuth && <Redirect to="/"/>}
+      {authStore.isAuth && <Redirect to="/" />}
       <form className={classes.form}>
         {!loginStore.loading ? (
           <Typography className={classes.title} variant="h4" color="secondary">
@@ -72,7 +72,11 @@ const Login = observer(() => {
             Login
           </Button>
           <Link to="/register">
-            <Button variant="outlined" color="primary" disabled={loginStore.loading}>
+            <Button
+              variant="outlined"
+              color="primary"
+              disabled={loginStore.loading}
+            >
               Register
             </Button>
           </Link>
